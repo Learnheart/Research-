@@ -1,0 +1,26 @@
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary / backup
+*.bak
+*.tmp
+*.log
+
+# Prompt outputs (research artifacts — keep local until reviewed)
+databricks/prompts/output/
+
+# Archive folders
+**/_archive/
+
+# Local-only settings
+.claude/settings.local.json
