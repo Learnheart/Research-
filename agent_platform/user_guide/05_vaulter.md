@@ -1,162 +1,162 @@
-# The Vaulter — Kho tri thức cá nhân
+# The Vaulter — Personal knowledge base
 
-> Upload tài liệu → AI rút thực thể & quan hệ thành knowledge graph → hỏi đáp dựa trên kho của bạn.
+> Upload documents → AI extracts entities and relations into a knowledge graph → ask questions grounded in your own vault.
 
 ---
 
-## 1. Giới thiệu khả năng
+## 1. Capabilities overview
 
-**The Vaulter làm gì?** Biến tập tài liệu của bạn thành một **kho tri thức cá nhân**:
-- Trích xuất thực thể (người, dự án, công ty, sản phẩm…) và quan hệ giữa chúng.
-- Hiển thị knowledge graph trực quan.
-- Cho phép hỏi đáp bằng ngôn ngữ tự nhiên — câu trả lời **chỉ dựa trên** tài liệu bạn đã upload.
+**What does The Vaulter do?** It turns your collection of documents into a **personal knowledge base**:
+- Extracts entities (people, projects, companies, products…) and the relations between them.
+- Visualizes them as an interactive knowledge graph.
+- Lets you ask natural-language questions — answers are grounded **only** in the documents you've uploaded.
 
-**Khi nào dùng?**
-- Bạn có chục báo cáo, tài liệu dự án và muốn tra cứu nhanh (`"Ai phụ trách dự án X?"`).
-- Bạn muốn xây "memory" cho công việc của riêng mình mà không nhập lại nội dung.
-- Bạn cần Q&A có nguồn gốc rõ ràng (LLM không bịa — nếu thông tin không có trong vault, agent sẽ trả lời "không biết").
+**When to use it**
+- You have dozens of project reports and documents and need quick lookups (`"Who runs project X?"`).
+- You want to build a "memory" for your own work without re-typing content.
+- You need Q&A with a clear source — the LLM won't make things up; if the info isn't in the vault, the agent says it doesn't know.
 
 **Input**
-- **Upload mode:** 1 tài liệu (PDF, DOCX, TXT) mỗi lần.
-- **Query mode:** câu hỏi dạng text.
+- **Upload mode:** 1 document at a time (PDF, DOCX, TXT).
+- **Query mode:** a text question.
 
 **Output**
-- **Upload:** xác nhận `X nodes, Y edges extracted`.
-- **Graph view:** knowledge graph tương tác.
-- **Query:** câu trả lời text dựa trên nội dung vault.
+- **Upload:** confirmation `X nodes, Y edges extracted`.
+- **Graph view:** an interactive knowledge graph.
+- **Query:** a text answer drawn from the vault.
 
 ---
 
-## 2. Giới hạn & điều kiện sử dụng
+## 2. Limits & prerequisites
 
-| Mục | Giới hạn |
+| Item | Limit |
 | --- | --- |
-| Định dạng upload | PDF, DOCX, TXT |
-| Kích thước file | Tối đa **20 MB** |
-| Trích xuất graph | Tối đa **6.000 ký tự** đầu file mỗi lần upload |
-| Context khi query | Chỉ dùng **5 tài liệu gần nhất**, tối đa **10.000 ký tự** ghép lại |
-| Phạm vi | Mỗi user một vault riêng — **không share** giữa các user |
-| Xoá tài liệu | Chưa có API xoá — tài liệu upload nhầm sẽ tồn tại trong vault |
-| Đăng nhập | SSO bắt buộc |
+| Upload formats | PDF, DOCX, TXT |
+| File size | Up to **20 MB** |
+| Graph extraction | Up to **6,000 characters** from the start of each upload |
+| Query context | Only the **5 most recent documents**, up to **10,000 characters** combined |
+| Scope | Each user has their own vault — **not shared** across users |
+| Delete documents | No delete API yet — accidentally uploaded files will remain in the vault |
+| Authentication | SSO required |
 
 ---
 
-## 3. Cách sử dụng (Step-by-step)
+## 3. How to use (step-by-step)
 
-The Vaulter có 2 chế độ chính: **Upload** và **Query**, cùng một **Graph view** để khám phá.
+The Vaulter has 2 main modes — **Upload** and **Query** — plus a **Graph view** for exploration.
 
-### A. Chế độ Upload
+### A. Upload mode
 
-#### Bước 1 — Mở The Vaulter, chọn tab Upload
-![Tab Upload](./images/vaulter-01-upload-tab.png)
-*Hình 1: Giao diện chính, hai tab Upload và Query.*
+#### Step 1 — Open The Vaulter and select the Upload tab
+![Upload tab](./images/vaulter-01-upload-tab.png)
+*Figure 1: The main interface, with Upload and Query tabs.*
 
-#### Bước 2 — Kéo-thả file
-Chọn 1 file (PDF/DOCX/TXT).
+#### Step 2 — Drag and drop the file
+Pick a single file (PDF/DOCX/TXT).
 
-#### Bước 3 — Bấm "Upload to Vault"
-Backend sẽ:
-1. Parse text từ file.
-2. Lưu nội dung vào kho.
-3. Gọi LLM trích xuất thực thể + quan hệ (giới hạn 6.000 ký tự đầu).
-4. Cập nhật graph (loại bỏ trùng lặp).
+#### Step 3 — Click "Upload to Vault"
+The backend will:
+1. Parse text from the file.
+2. Store the content in the vault.
+3. Call the LLM to extract entities + relations (capped at the first 6,000 characters).
+4. Update the graph (de-duplicating).
 
-![Đang xử lý](./images/vaulter-02-uploading.png)
-*Hình 2: Tiến độ upload và extract.*
+![Processing](./images/vaulter-02-uploading.png)
+*Figure 2: Upload and extraction progress.*
 
-#### Bước 4 — Xem kết quả
-Thông báo: `"Document_X.pdf added — 12 nodes, 8 edges extracted"`.
+#### Step 4 — See the result
+Message: `"Document_X.pdf added — 12 nodes, 8 edges extracted"`.
 
-### B. Chế độ Graph view
+### B. Graph view
 
-Sau khi upload, chuyển sang tab **Graph** để xem trực quan.
+After uploading, switch to the **Graph** tab to visualize.
 
 ![Knowledge graph](./images/vaulter-03-graph.png)
-*Hình 3: Knowledge graph tương tác — nodes là thực thể, edges là quan hệ.*
+*Figure 3: Interactive knowledge graph — nodes are entities, edges are relations.*
 
-- Hover node → xem thông tin chi tiết.
-- Kéo thả để bố trí lại.
-- Zoom in/out để khám phá cluster.
+- Hover a node → see details.
+- Drag to reposition.
+- Zoom in/out to explore clusters.
 
-### C. Chế độ Query
+### C. Query mode
 
-#### Bước 1 — Chuyển sang tab Query
-#### Bước 2 — Gõ câu hỏi
-Ví dụ: `"Ai chịu trách nhiệm dự án Alpha?"`, `"Dự án X có những risk gì?"`, `"Khi nào dự án Beta kick-off?"`.
+#### Step 1 — Switch to the Query tab
+#### Step 2 — Type your question
+Examples: `"Who owns the Alpha project?"`, `"What risks does project X have?"`, `"When does project Beta kick off?"`.
 
 ![Query box](./images/vaulter-04-query.png)
-*Hình 4: Ô câu hỏi, nút Ask.*
+*Figure 4: Question input + Ask button.*
 
-#### Bước 3 — Bấm "Ask"
-Agent đọc 5 tài liệu gần nhất, trả lời chỉ dựa trên nội dung đó.
+#### Step 3 — Click "Ask"
+The agent reads the 5 most recent documents and answers strictly from that content.
 
-#### Bước 4 — Đọc câu trả lời
-![Kết quả query](./images/vaulter-05-answer.png)
-*Hình 5: Trả lời dựa trên context vault — nếu không tìm thấy, agent nói "I don't have that information."*
-
----
-
-## 4. Kịch bản minh hoạ (User Journeys)
-
-### Kịch bản 1 — Xây vault cho dự án dài hơi
-
-**Bối cảnh:** Bạn quản lý dự án "AI Transformation" đang chạy 6 tháng. Có ~10 tài liệu: kickoff deck, weekly status, risk register, tech specs, vendor proposal.
-
-**Bước thực hiện:**
-1. Tuần 1 — upload 4 file đầu (kickoff, scope, vendor proposal, plan).
-2. Mở Graph: thấy các node `Alpha`, `Vendor X`, `Q3 2026 Milestone`, `John (PM)`, `Privacy Risk`…
-3. Tuần 4 — upload thêm 2 file status report.
-4. Cuối tháng — bạn được hỏi `"Dự án Alpha hiện đang gặp risk gì?"`.
-5. Vào tab Query → gõ câu hỏi → agent trả lời dựa trên risk register + status report.
-
-![Vault với 10 tài liệu](./images/vaulter-scn1-rich-graph.png)
-*Hình: Graph sau 6 tuần — nhiều cluster theo chủ đề.*
+#### Step 4 — Read the answer
+![Query result](./images/vaulter-05-answer.png)
+*Figure 5: Answer grounded in vault context — if nothing is found, the agent says "I don't have that information."*
 
 ---
 
-### Kịch bản 2 — Tra nhanh trước cuộc họp
+## 4. Walkthroughs (User Journeys)
 
-**Bối cảnh:** 5 phút trước họp, sếp hỏi `"Vendor X có những commitment gì trong contract?"`.
+### Journey 1 — Build a vault for a long-running project
 
-**Bước thực hiện:**
-1. Mở Vaulter → tab Query.
-2. Gõ: `"Vendor X commitment in contract?"`.
-3. Agent đọc các file đã upload có chứa "Vendor X" trong 5 tài liệu gần nhất → trả về danh sách commitment.
-4. Copy câu trả lời, vào họp.
+**Context:** You manage the "AI Transformation" project, running for 6 months. You have ~10 documents: kickoff deck, weekly status, risk register, tech specs, vendor proposal.
 
-**Cảnh báo:** Nếu file contract bạn cần đã upload từ lâu (vị trí 6 trở đi tính theo thời gian), nó **không** nằm trong context query — cần re-upload hoặc upload file tóm tắt.
+**Steps:**
+1. Week 1 — upload the first 4 files (kickoff, scope, vendor proposal, plan).
+2. Open Graph: you see nodes like `Alpha`, `Vendor X`, `Q3 2026 Milestone`, `John (PM)`, `Privacy Risk`…
+3. Week 4 — upload 2 more status reports.
+4. End of the month — you're asked `"What risks does the Alpha project face right now?"`.
+5. Open the Query tab → ask → the agent answers using the risk register + status reports.
 
----
-
-### Kịch bản 3 — Khám phá kết nối giữa các dự án
-
-**Bối cảnh:** Bạn nghi 2 dự án A và B có overlap về stakeholder/tech stack.
-
-**Bước thực hiện:**
-1. Mở Graph view.
-2. Tìm node `Project A` và `Project B`.
-3. Quan sát các edge chia sẻ — ví dụ cùng kết nối tới `John (Engineering Lead)`, cùng dùng `Databricks`, cùng có `Data Privacy Risk`.
-4. Đặt câu hỏi xác nhận: `"What do projects A and B have in common?"` → agent tổng hợp text.
+![Vault with 10 documents](./images/vaulter-scn1-rich-graph.png)
+*Figure: Graph after 6 weeks — multiple topical clusters.*
 
 ---
 
-## 5. Tips sử dụng
+### Journey 2 — Quick lookup before a meeting
 
-- **Upload theo thứ tự ưu tiên**: vault chỉ dùng 5 file gần nhất cho query — nếu cần Q&A trên file cũ, re-upload nó.
-- **File nhỏ hơn → graph chính xác hơn**: chỉ 6.000 ký tự đầu được dùng để trích xuất; tài liệu dài nên tách thành phần (executive summary, scope, risks).
-- **Tên thực thể nhất quán**: nếu trong file gọi là `"Mr. John Smith"`, file khác gọi `"John S."`, graph sẽ tạo 2 node khác nhau. Chuẩn hoá tên trước khi upload nếu cần graph gọn.
-- **Câu hỏi nên cụ thể**: `"Who manages Project Alpha?"` tốt hơn `"Tell me about Alpha"`.
-- **Vault không phải search engine**: nếu cần tra cứu chính xác, dùng Ctrl-F trong file gốc. Vault tốt cho câu hỏi mở.
-- **Privacy**: vault là **per-user** — không share với đồng nghiệp. Đừng upload tài liệu cần share rộng và mong người khác query được.
+**Context:** 5 minutes before a meeting, your boss asks `"What are Vendor X's commitments in the contract?"`.
+
+**Steps:**
+1. Open the Vaulter → Query tab.
+2. Type: `"Vendor X commitments in contract?"`.
+3. The agent reads the recent files mentioning "Vendor X" within the 5 most-recent documents → returns the list of commitments.
+4. Copy the answer, walk into the meeting.
+
+**Warning:** If the contract file was uploaded long ago (position 6+ by recency), it is **not** in the query context — re-upload it, or upload a summary.
 
 ---
 
-## 6. Hạn chế đã biết
+### Journey 3 — Find connections across projects
 
-- **Chỉ 6.000 ký tự đầu file** được dùng để trích xuất graph — phần sau không vào knowledge graph.
-- **Chỉ 5 tài liệu gần nhất** + tối đa 10K ký tự context cho query — vault có 100 file vẫn chỉ query trên 5 file mới nhất.
-- **Không có vector search**: không "tìm" theo độ tương đồng — chỉ ghép thẳng nội dung vào context.
-- **Không xoá file**: chưa có API delete. Upload nhầm sẽ tồn tại mãi (chỉ bị "đẩy ra khỏi top 5" khi upload thêm).
-- **Không scale beyond ~50K ký tự tổng**: vault quá lớn không cải thiện kết quả vì cap context.
-- **Graph extraction có thể bỏ sót**: LLM đôi khi không nhận diện được thực thể phụ — không đảm bảo 100%.
-- **Per-user**: không share, không có vault chung của team.
+**Context:** You suspect projects A and B overlap on stakeholders/tech stack.
+
+**Steps:**
+1. Open the Graph view.
+2. Find the `Project A` and `Project B` nodes.
+3. Inspect shared edges — e.g., both link to `John (Engineering Lead)`, both use `Databricks`, both have `Data Privacy Risk`.
+4. Confirm with a question: `"What do projects A and B have in common?"` → the agent synthesizes a text answer.
+
+---
+
+## 5. Usage tips
+
+- **Upload in priority order**: the vault only uses the 5 most recent files for query — re-upload older files if you need Q&A on them.
+- **Smaller files → more accurate graph**: only the first 6,000 characters drive extraction; split long documents into parts (executive summary, scope, risks).
+- **Use consistent entity names**: if one file says `"Mr. John Smith"` and another says `"John S."`, the graph creates two separate nodes. Normalize names before uploading if you need a clean graph.
+- **Make questions specific**: `"Who manages Project Alpha?"` is better than `"Tell me about Alpha"`.
+- **The vault is not a search engine**: for exact lookups, use Ctrl-F in the source file. The vault is best for open-ended questions.
+- **Privacy**: the vault is **per-user** — it is not shared with teammates. Don't upload documents expecting others to query them.
+
+---
+
+## 6. Known limitations
+
+- **Only the first 6,000 characters** of each file are used for extraction — the rest is not in the knowledge graph.
+- **Only the 5 most recent documents** + a 10K-character context cap are used per query — a vault with 100 files still queries only the latest 5.
+- **No vector search**: there is no similarity retrieval — content is concatenated into context as-is.
+- **No delete**: no delete API yet. Accidental uploads stay forever (they only get "pushed out of the top 5" by newer uploads).
+- **Does not scale beyond ~50K total characters**: a very large vault doesn't improve results because of the context cap.
+- **Graph extraction may miss things**: the LLM occasionally misses minor entities — no 100% guarantee.
+- **Per-user**: no sharing, no team-wide vault.

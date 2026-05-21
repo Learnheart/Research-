@@ -1,146 +1,146 @@
-# The Translator — Dịch tài liệu giữ nguyên format
+# The Translator — Translate documents while preserving layout
 
-> Dịch PDF, DOCX, PPTX, TXT giữa các ngôn ngữ mà không phá vỡ layout — bố cục, font, bảng biểu, slide đều được giữ lại.
+> Translate PDF, DOCX, PPTX, TXT files between any two languages without breaking the layout — layout, fonts, tables, and slides are all preserved.
 
 ---
 
-## 1. Giới thiệu khả năng
+## 1. Capabilities overview
 
-**The Translator làm gì?** Dịch tài liệu giữa hai ngôn ngữ bất kỳ và **trả về file cùng định dạng** với bố cục gần như nguyên gốc.
+**What does The Translator do?** It translates documents between any two languages and **returns a file in the same format**, with a near-original layout.
 
-**Khi nào dùng?**
-- Bạn có báo cáo, đề xuất, slide cần bản dịch nhưng không muốn mất công định dạng lại.
-- Bạn cần dịch nhanh nhiều slide (PPTX) hoặc bảng biểu (DOCX).
-- Ngôn ngữ nguồn không chắc — agent tự nhận diện.
+**When to use it**
+- You have a report, proposal, or deck that needs translation but you don't want to redo the formatting.
+- You need to quickly translate many slides (PPTX) or tables (DOCX).
+- You're unsure of the source language — the agent auto-detects it.
 
 **Input**
-- 1 file: PDF, DOCX, PPTX hoặc TXT.
-- Ngôn ngữ đích (mặc định: Tiếng Việt).
-- Ngôn ngữ nguồn (mặc định: tự động phát hiện).
+- 1 file: PDF, DOCX, PPTX, or TXT.
+- Target language (default: Vietnamese).
+- Source language (default: auto-detect).
 
 **Output**
-- File đã dịch, cùng định dạng đầu vào — **trừ PDF**, sẽ trả về DOCX.
-- Với TXT: text hiển thị thẳng trên web + nút Copy.
-- Tiến độ realtime: số chunk đã dịch / tổng chunk + ước lượng thời gian còn lại.
+- A translated file in the same format as the input — **except PDF**, which is returned as DOCX.
+- For TXT: text is shown directly in the web app with a Copy button.
+- Real-time progress: number of chunks translated / total chunks + estimated time remaining.
 
 ---
 
-## 2. Giới hạn & điều kiện sử dụng
+## 2. Limits & prerequisites
 
-| Mục | Giới hạn |
+| Item | Limit |
 | --- | --- |
-| Định dạng hỗ trợ | PDF, DOCX, PPTX, TXT |
-| Kích thước file | Tối đa **20 MB** |
-| TXT | Truncate ở **12.000 ký tự** — phần vượt sẽ không được dịch |
-| PDF | Output là **DOCX** (không trả lại PDF) |
-| Timeout client | 5 phút — file rất lớn có thể bị ngắt phía giao diện |
-| Đăng nhập | SSO bắt buộc |
+| Supported formats | PDF, DOCX, PPTX, TXT |
+| File size | Up to **20 MB** |
+| TXT | Truncated at **12,000 characters** — anything beyond is not translated |
+| PDF | Output is **DOCX** (no PDF returned) |
+| Client timeout | 5 minutes — very large files may be cut off at the UI layer |
+| Authentication | SSO required |
 
 ---
 
-## 3. Cách sử dụng (Step-by-step)
+## 3. How to use (step-by-step)
 
-### Bước 1 — Mở The Translator
-Vào tab **The Translator** trong Agent Studio.
+### Step 1 — Open The Translator
+Open the **The Translator** tab in Agent Studio.
 
-![Giao diện chính](./images/translator-01-home.png)
-*Hình 1: Panel trái là vùng upload, panel phải hiển thị kết quả/tiến độ.*
+![Main interface](./images/translator-01-home.png)
+*Figure 1: The left panel is the upload zone; the right panel shows results/progress.*
 
-### Bước 2 — Upload file
-Kéo-thả file vào ô bên trái, hoặc bấm để chọn.
+### Step 2 — Upload a file
+Drag and drop the file into the left panel, or click to browse.
 
-![Vùng upload](./images/translator-02-upload.png)
-*Hình 2: Vùng kéo-thả file ở panel trái.*
+![Upload zone](./images/translator-02-upload.png)
+*Figure 2: The drag-and-drop zone in the left panel.*
 
-### Bước 3 — Chọn ngôn ngữ đích
-Mở dropdown "Translate to" và chọn ngôn ngữ. Mặc định là Tiếng Việt.
+### Step 3 — Choose the target language
+Open the "Translate to" dropdown and pick the language. Default is Vietnamese.
 
-![Chọn ngôn ngữ](./images/translator-03-language.png)
-*Hình 3: Dropdown ngôn ngữ đích.*
+![Language picker](./images/translator-03-language.png)
+*Figure 3: The target language dropdown.*
 
-### Bước 4 — Bấm "Translate to {ngôn ngữ}"
-Quá trình gồm 4 giai đoạn:
-1. **Upload** — file lên Volume.
-2. **Analyzing** — backend đọc & validate.
-3. **Translating** — dịch song song, hiển thị `chunk X / Y` + ước lượng thời gian.
-4. **Building** — ghép file kết quả.
+### Step 4 — Click "Translate to {language}"
+The process has 4 stages:
+1. **Upload** — file is sent to the Volume.
+2. **Analyzing** — backend parses & validates the file.
+3. **Translating** — parallel translation, showing `chunk X / Y` + estimated time.
+4. **Building** — assembling the output file.
 
-![Tiến độ dịch](./images/translator-04-progress.png)
-*Hình 4: Progress bar và thông báo realtime.*
+![Translation progress](./images/translator-04-progress.png)
+*Figure 4: Progress bar and real-time status messages.*
 
-### Bước 5 — Tải kết quả
-- **PPTX / DOCX / PDF (→DOCX):** nút "Download" xuất hiện ở panel phải.
-- **TXT:** text dịch hiển thị trực tiếp, kèm nút Copy.
+### Step 5 — Download the result
+- **PPTX / DOCX / PDF (→DOCX):** a "Download" button appears in the right panel.
+- **TXT:** the translated text is shown inline with a Copy button.
 
-![Nút download](./images/translator-05-download.png)
-*Hình 5: Nút tải file kết quả.*
-
----
-
-## 4. Kịch bản minh hoạ (User Journeys)
-
-### Kịch bản 1 — Dịch slide khách hàng từ tiếng Anh sang tiếng Việt
-
-**Bối cảnh:** Bạn nhận `Vendor_Pitch.pptx` 25 slide từ đối tác cần dịch để trình ban giám đốc.
-
-**Bước thực hiện:**
-1. Mở Translator → kéo-thả `Vendor_Pitch.pptx`.
-2. Chọn ngôn ngữ đích: **Vietnamese**.
-3. Bấm "Translate to Vietnamese".
-4. Quan sát tiến độ: `chunk 5 / 25 — còn ~3 phút`.
-   ![Dịch PPTX](./images/translator-scn1-pptx.png)
-   *Hình: Slide-by-slide progress.*
-5. Sau khi hoàn tất, bấm Download → nhận `Vendor_Pitch_VN.pptx`.
-
-**Lưu ý quan sát được:** chữ trong table, group shape, header/footer đều được dịch và giữ font/màu/vị trí.
+![Download button](./images/translator-05-download.png)
+*Figure 5: The button to download the result file.*
 
 ---
 
-### Kịch bản 2 — Dịch hợp đồng PDF dài
+## 4. Walkthroughs (User Journeys)
 
-**Bối cảnh:** Hợp đồng `Contract_2026.pdf` 40 trang cần bản tiếng Anh.
+### Journey 1 — Translate a customer deck from English to Vietnamese
 
-**Bước thực hiện:**
-1. Upload PDF (~8 MB).
-2. Chọn ngôn ngữ đích: **English**.
-3. Bấm Translate. Agent chuyển PDF → DOCX nội bộ, sau đó dịch.
-4. Tải về `Contract_2026_translated.docx`.
+**Context:** You received `Vendor_Pitch.pptx` (25 slides) from a partner and need to translate it for an executive review.
 
-**Cảnh báo:** Output là DOCX chứ không phải PDF. Nếu cần PDF cuối cùng, hãy Export-as-PDF từ Word sau khi review.
+**Steps:**
+1. Open the Translator → drag and drop `Vendor_Pitch.pptx`.
+2. Pick the target language: **Vietnamese**.
+3. Click "Translate to Vietnamese".
+4. Watch the progress: `chunk 5 / 25 — ~3 minutes left`.
+   ![PPTX translation](./images/translator-scn1-pptx.png)
+   *Figure: Slide-by-slide progress.*
+5. When complete, click Download → receive `Vendor_Pitch_VN.pptx`.
+
+**What you'll notice:** text inside tables, grouped shapes, headers/footers are all translated while keeping the original font, color, and position.
 
 ---
 
-### Kịch bản 3 — Dịch ghi chú ngắn dạng TXT
+### Journey 2 — Translate a long PDF contract
 
-**Bối cảnh:** Bạn copy 2.000 ký tự ghi chú nội bộ vào `notes.txt`, cần dịch nhanh sang tiếng Anh.
+**Context:** A 40-page contract `Contract_2026.pdf` needs to be translated into English.
 
-**Bước thực hiện:**
+**Steps:**
+1. Upload the PDF (~8 MB).
+2. Pick the target language: **English**.
+3. Click Translate. The agent internally converts PDF → DOCX, then translates.
+4. Download `Contract_2026_translated.docx`.
+
+**Warning:** The output is DOCX, not PDF. If you need a PDF at the end, use Word's Export-as-PDF after reviewing.
+
+---
+
+### Journey 3 — Translate a short TXT note
+
+**Context:** You copied 2,000 characters of internal notes into `notes.txt` and need a quick English translation.
+
+**Steps:**
 1. Upload `notes.txt`.
-2. Ngôn ngữ đích: **English**.
-3. Bấm Translate — hoàn tất trong ~5 giây (vì gọi một lượt duy nhất).
-4. Text dịch hiển thị thẳng trên web → bấm "Copy" để dán vào nơi khác.
+2. Target language: **English**.
+3. Click Translate — done in ~5 seconds (single round-trip).
+4. The translation is displayed inline → click "Copy" to paste it elsewhere.
 
-![Kết quả TXT inline](./images/translator-scn3-txt.png)
-*Hình: Text dịch hiển thị inline + nút Copy.*
-
----
-
-## 5. Tips sử dụng
-
-- **Dùng PPTX/DOCX nếu có thể** — chất lượng giữ format tốt hơn PDF.
-- **PDF có hình quét (scan)** sẽ không dịch được — agent chỉ đọc text layer. Chạy OCR trước nếu cần.
-- **File >20MB**: tách nhỏ ra (theo chương / theo nhóm slide) rồi dịch từng phần.
-- **Thuật ngữ chuyên ngành**: hiện chưa có glossary — review sau khi dịch để chỉnh thuật ngữ tài chính/pháp lý chính xác.
-- **TXT vượt 12.000 ký tự**: chia thành nhiều file hoặc dán vào DOCX (DOCX không có giới hạn ký tự nghiêm ngặt).
-- **Nếu trình duyệt timeout sau 5 phút**: backend vẫn xử lý tiếp — chờ một lúc rồi refresh trang để lấy kết quả.
+![Inline TXT result](./images/translator-scn3-txt.png)
+*Figure: Translated text shown inline with a Copy button.*
 
 ---
 
-## 6. Hạn chế đã biết
+## 5. Usage tips
 
-- **PDF → DOCX**: không có cách giữ output PDF; phải export lại từ Word nếu bắt buộc PDF.
-- **TXT bị cắt ở 12.000 ký tự** — phần sau bị bỏ.
-- **Không có glossary / từ điển chuyên ngành** — thuật ngữ tài chính có thể không nhất quán.
-- **Tối đa 5 worker song song** — file PPTX rất lớn (50+ slide) vẫn xử lý theo lô.
-- **PDF scan / ảnh** không dịch được (không có OCR built-in).
-- **Không tự gửi email** — phải tự tải về và chia sẻ.
+- **Prefer PPTX/DOCX when possible** — formatting is preserved better than with PDF.
+- **PDFs with scanned images** cannot be translated — the agent only reads the text layer. Run OCR first if needed.
+- **Files >20MB**: split them into smaller pieces (by chapter / slide group) and translate each.
+- **Specialized terminology**: no glossary support yet — review the translation to fix financial/legal terms after the fact.
+- **TXT over 12,000 characters**: split into multiple files or paste into a DOCX (DOCX has no strict character cap).
+- **If the browser times out after 5 minutes**: the backend keeps processing — wait a bit, then refresh the page to fetch the result.
+
+---
+
+## 6. Known limitations
+
+- **PDF → DOCX**: there is no way to keep the output as PDF; you must re-export from Word if PDF is required.
+- **TXT is truncated at 12,000 characters** — content beyond that is dropped.
+- **No glossary / domain dictionary** — financial terminology may be inconsistent.
+- **Maximum 5 concurrent workers** — very large PPTX files (50+ slides) are still processed in batches.
+- **Scanned PDFs / images** cannot be translated (no built-in OCR).
+- **No email delivery** — you must download and share the file yourself.

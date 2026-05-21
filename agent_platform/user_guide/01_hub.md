@@ -1,141 +1,141 @@
-# Hub — Trợ lý AI hợp nhất
+# Hub — The unified AI assistant
 
-> Một cửa chat duy nhất. Bạn mô tả việc cần làm — Hub tự chọn và gọi agent chuyên biệt phía sau.
+> One single chat window. Describe what you need — Hub picks and calls the right specialized agent behind the scenes.
 
 ---
 
-## 1. Giới thiệu khả năng
+## 1. Capabilities overview
 
-**Hub là gì?** Là điểm vào (entry point) cho toàn bộ Agent Studio. Bạn không cần biết "Translator nằm ở đâu" hay "agent nào tóm tắt được file" — chỉ cần viết yêu cầu bằng ngôn ngữ tự nhiên, Hub sẽ điều phối.
+**What is Hub?** It is the entry point for the entire Agent Studio. You don't need to know "where the Translator lives" or "which agent can summarize files" — just write your request in natural language, and Hub will orchestrate.
 
-**Khi nào dùng Hub?**
-- Bạn không chắc agent nào phù hợp.
-- Bạn muốn làm chuỗi việc liên tiếp (dịch → tóm tắt → tạo slide) trong cùng một cuộc hội thoại.
-- Bạn cần trợ lý "nhớ" ngữ cảnh giữa các yêu cầu.
+**When to use Hub**
+- You're not sure which agent fits.
+- You want to chain tasks (translate → summarize → build slides) inside the same conversation.
+- You need an assistant that "remembers" context across requests.
 
-**Input điển hình**
-- Tin nhắn text: `"Dịch báo cáo này sang tiếng Anh"`, `"Tạo presentation 10 slide về chiến lược AI 2026"`.
-- File đính kèm (khi Hub yêu cầu): PDF, DOCX, PPTX, TXT.
+**Typical input**
+- Text messages: `"Translate this report into English"`, `"Create a 10-slide presentation about AI strategy 2026"`.
+- File attachments (when Hub asks): PDF, DOCX, PPTX, TXT.
 
-**Output điển hình**
-- Phản hồi text trả về trong khung chat.
-- Hành động đi kèm: nút download file, mở canvas brainstorm, hiển thị slide preview…
+**Typical output**
+- A text response inside the chat window.
+- Associated actions: download buttons, opening a brainstorming canvas, displaying a slide preview, etc.
 
-**Các agent Hub có thể gọi (qua tool):**
+**Agents Hub can call (via tools):**
 Translator, Summarizer, Powerpoint-er, Vaulter, Brainstormer, AI Visionary.
 
 ---
 
-## 2. Giới hạn & điều kiện sử dụng
+## 2. Limits & prerequisites
 
-| Mục | Giới hạn |
+| Item | Limit |
 | --- | --- |
-| File hỗ trợ | PDF, DOCX, PPTX, TXT |
-| Kích thước file | Tối đa **20 MB** mỗi file |
-| Đăng nhập | Bắt buộc SSO của tổ chức |
-| Agent chưa kết nối | **Canvas Designer** và **Resume Evaluator** chưa có tool trong Hub — vui lòng mở agent trực tiếp |
-| Streaming | Không — kết quả trả về một lần khi xử lý xong |
+| Supported files | PDF, DOCX, PPTX, TXT |
+| File size | Up to **20 MB** per file |
+| Authentication | Organization SSO required |
+| Agents not yet connected | **Canvas Designer** and **Resume Evaluator** are not exposed as Hub tools — please open those agents directly |
+| Streaming | Not supported — the result is returned in one shot when processing completes |
 
 ---
 
-## 3. Cách sử dụng (Step-by-step)
+## 3. How to use (step-by-step)
 
-### Bước 1 — Mở Hub
-Truy cập tab **Hub** trong trang chủ Agent Studio.
+### Step 1 — Open Hub
+Go to the **Hub** tab on the Agent Studio home page.
 
-![Trang chủ Hub](./images/hub-01-home.png)
-*Hình 1: Giao diện chính Hub — khung chat ở giữa, lịch sử session ở sidebar trái.*
+![Hub home screen](./images/hub-01-home.png)
+*Figure 1: Hub's main interface — chat window in the middle, session history in the left sidebar.*
 
-### Bước 2 — Gõ yêu cầu
-Nhập việc bạn cần làm bằng ngôn ngữ tự nhiên, ví dụ: `"Tạo slide 10 trang về kế hoạch AI 2026 cho hội đồng quản trị"`.
+### Step 2 — Type your request
+Enter what you need in natural language, for example: `"Build a 10-slide presentation about the 2026 AI plan for the Board of Directors"`.
 
-![Nhập yêu cầu](./images/hub-02-prompt.png)
-*Hình 2: Ô nhập tin nhắn ở dưới cùng. Nhấn Enter để gửi.*
+![Entering a request](./images/hub-02-prompt.png)
+*Figure 2: The message input at the bottom. Press Enter to send.*
 
-### Bước 3 — Phản hồi của Hub
-- **Trường hợp A — Cần file:** Hub sẽ trả lời `"Tôi cần bạn upload một file…"`. Một vùng kéo-thả xuất hiện ngay trong chat.
-- **Trường hợp B — Không cần file:** Hub sẽ gọi agent phù hợp ngay (ví dụ Powerpoint-er) và bắt đầu xử lý.
+### Step 3 — Hub responds
+- **Case A — File needed:** Hub replies `"I need you to upload a file…"`. A drag-and-drop zone appears inside the chat.
+- **Case B — No file needed:** Hub calls the right agent right away (e.g. the Powerpoint-er) and starts processing.
 
-![Yêu cầu upload file](./images/hub-03-file-request.png)
-*Hình 3: Khi cần file, vùng kéo-thả tự xuất hiện trong khung chat.*
+![File upload request](./images/hub-03-file-request.png)
+*Figure 3: When a file is needed, a drag-and-drop zone shows up inside the chat.*
 
-### Bước 4 — Upload file (nếu được yêu cầu)
-Kéo-thả file vào vùng được đánh dấu, hoặc bấm để chọn từ máy.
+### Step 4 — Upload the file (if requested)
+Drag and drop the file into the highlighted zone, or click to pick it from your computer.
 
-### Bước 5 — Đợi xử lý
-Hub có thể mất 10–60 giây vì phải gọi agent chuyên biệt phía sau. Khung chat hiển thị trạng thái xử lý.
+### Step 5 — Wait for processing
+Hub may take 10–60 seconds because it calls a specialized agent behind the scenes. The chat shows the processing status.
 
-### Bước 6 — Nhận kết quả
-Kết quả hiển thị dưới dạng phản hồi text, kèm các nút hành động (Download, Mở canvas, v.v.).
+### Step 6 — Receive the result
+The result appears as a text response, accompanied by action buttons (Download, Open canvas, etc.).
 
-![Kết quả + nút download](./images/hub-04-result.png)
-*Hình 4: Hub trả về kết quả kèm nút Download để tải file.*
+![Result with download button](./images/hub-04-result.png)
+*Figure 4: Hub returns the result along with a Download button to grab the file.*
 
-### Bước 7 — Tiếp tục hội thoại (tuỳ chọn)
-Gõ yêu cầu kế tiếp — Hub vẫn nhớ file/ngữ cảnh trước đó. Ví dụ: `"Bây giờ tóm tắt cùng file đó"`.
-
----
-
-## 4. Kịch bản minh hoạ (User Journeys)
-
-### Kịch bản 1 — Dịch nhanh báo cáo tài chính
-
-**Bối cảnh:** Bạn nhận `Q3_Report.pdf` từ đối tác và cần bản tiếng Anh để gửi cho giám đốc khu vực.
-
-**Bước thực hiện:**
-1. Mở Hub, gõ: `"Dịch file này sang tiếng Anh"`.
-2. Hub trả lời: `"Tôi cần bạn upload một file để dịch."`
-   ![Hub yêu cầu file](./images/hub-scn1-upload-prompt.png)
-   *Hình: Vùng upload xuất hiện sau yêu cầu.*
-3. Kéo-thả `Q3_Report.pdf` vào.
-4. Hub gọi Translator (mất ~45 giây với PDF 10 trang), hiển thị tiến độ.
-5. Hub trả về: `"Đã dịch xong. Bạn tải file ở đây:"` + nút Download.
-
-**Kết quả:** Tải về `Q3_Report_translated.docx` (PDF được chuyển sang DOCX — xem [The Translator](./02_translator.md)).
+### Step 7 — Continue the conversation (optional)
+Type your next request — Hub still remembers the previous file/context. Example: `"Now summarize that same file"`.
 
 ---
 
-### Kịch bản 2 — Chuỗi nhiều bước trong một cuộc hội thoại
+## 4. Walkthroughs (User Journeys)
 
-**Bối cảnh:** Bạn có biên bản họp `Meeting_2026-05-15.docx` muốn (1) tóm tắt nhanh, (2) tạo slide review.
+### Journey 1 — Quickly translate a financial report
 
-**Bước thực hiện:**
-1. Mở Hub, gõ: `"Tóm tắt file biên bản họp này"` → upload file → nhận tóm tắt 5 câu + 7 key points.
-2. Gõ tiếp (cùng session): `"Tạo slide 8 trang trình bày các quyết định chính cho team"`.
-3. Hub dùng tóm tắt vừa rồi làm nguyên liệu, gọi Powerpoint-er, trả về preview slide.
-4. Bạn duyệt outline → nhấn "Build" → tải `.pptx`.
+**Context:** You received `Q3_Report.pdf` from a partner and need an English version to send to the regional director.
 
-![Chuỗi 2 tool trong 1 session](./images/hub-scn2-chained.png)
-*Hình: Hub kết hợp Summarizer rồi Powerpoint-er trong cùng cuộc hội thoại.*
+**Steps:**
+1. Open Hub, type: `"Translate this file into English"`.
+2. Hub responds: `"I need you to upload a file to translate."`
+   ![Hub asking for a file](./images/hub-scn1-upload-prompt.png)
+   *Figure: The upload zone appears after the request.*
+3. Drag and drop `Q3_Report.pdf`.
+4. Hub calls the Translator (~45 seconds for a 10-page PDF), showing progress.
+5. Hub returns: `"Done translating. Download the file here:"` + a Download button.
 
----
-
-### Kịch bản 3 — Yêu cầu trực tiếp không cần file
-
-**Bối cảnh:** Bạn muốn nhanh có bản nháp PowerPoint về chủ đề mới.
-
-**Bước thực hiện:**
-1. Mở Hub, gõ: `"Tạo presentation 10 slide về 'Ứng dụng AI Agent trong vận hành ngân hàng' cho ban điều hành"`.
-2. Hub gọi thẳng Powerpoint-er (không cần file đầu vào), trả về outline.
-3. Review outline, gõ: `"Đổi slide 5 sang dạng process timeline"` — Hub gọi tool ai-edit-slide.
-4. Khi hài lòng → Build → tải PPTX.
+**Outcome:** Download `Q3_Report_translated.docx` (PDF is converted to DOCX — see [The Translator](./02_translator.md)).
 
 ---
 
-## 5. Tips sử dụng
+### Journey 2 — Multi-step chain inside a single conversation
 
-- **Mô tả rõ "động từ + đối tượng"**: `"Dịch file này sang tiếng Anh"` rõ hơn `"Cái này cần xử lý"`.
-- **Chỉ định ngôn ngữ/định dạng đầu ra**: `"Tóm tắt bằng tiếng Việt, không quá 5 bullet"`.
-- **Tận dụng ngữ cảnh trong session**: sau khi upload file, không cần upload lại — chỉ cần nói `"Bây giờ làm X với file đó"`.
-- **Nếu cần Canvas Designer hoặc Resume Evaluator**: mở trực tiếp trang agent, vì Hub chưa kết nối.
-- **Khi yêu cầu phức tạp, chia thành các bước nhỏ**: thay vì `"Dịch, tóm tắt, rồi tạo slide"` trong một lệnh, hãy gửi 3 lệnh liên tiếp để theo dõi từng kết quả.
+**Context:** You have a meeting minute `Meeting_2026-05-15.docx` and want to (1) summarize it quickly, then (2) build a review deck.
+
+**Steps:**
+1. Open Hub, type: `"Summarize these meeting minutes"` → upload the file → receive a 5-sentence summary + 7 key points.
+2. Continue in the same session: `"Build an 8-slide deck presenting the key decisions for the team"`.
+3. Hub uses the summary you just got as input, calls the Powerpoint-er, and returns the slide preview.
+4. Review the outline → click "Build" → download the `.pptx`.
+
+![Two tools chained in one session](./images/hub-scn2-chained.png)
+*Figure: Hub combines the Summarizer and the Powerpoint-er in the same conversation.*
 
 ---
 
-## 6. Hạn chế đã biết
+### Journey 3 — Direct request without a file
 
-- **Độ trễ cao hơn**: Hub gọi agent phía sau qua HTTP → mỗi lệnh chậm hơn ~2–5 giây so với gọi agent trực tiếp.
-- **Không streaming**: không thấy text được sinh dần — chờ trọn vẹn kết quả.
-- **Chưa kết nối Canvas Designer & Resume Evaluator**: phải vào trang agent riêng.
-- **Session state tăng dần**: cuộc hội thoại càng dài, Hub càng phải nén lịch sử — chất lượng nhớ giảm sau ~30 lượt trao đổi. Khuyến nghị bắt đầu session mới khi đổi chủ đề lớn.
-- **Không hoàn tác**: nếu yêu cầu sai, gõ yêu cầu mới — Hub không có nút "undo" cho hành động đã chạy.
+**Context:** You want a quick PowerPoint draft on a new topic.
+
+**Steps:**
+1. Open Hub, type: `"Create a 10-slide presentation on 'AI Agent applications in banking operations' for executive leadership"`.
+2. Hub calls the Powerpoint-er directly (no input file needed) and returns an outline.
+3. Review the outline, type: `"Convert slide 5 into a process timeline"` — Hub invokes the ai-edit-slide tool.
+4. When satisfied → Build → download the PPTX.
+
+---
+
+## 5. Usage tips
+
+- **Use clear "verb + object" descriptions**: `"Translate this file into English"` is clearer than `"Process this for me"`.
+- **Specify the output language/format**: `"Summarize in Vietnamese, no more than 5 bullets"`.
+- **Leverage in-session context**: once a file is uploaded, you don't need to re-upload — just say `"Now do X with that file"`.
+- **If you need Canvas Designer or Resume Evaluator**: open the agent page directly, since Hub is not connected to them yet.
+- **For complex requests, split them into smaller steps**: instead of `"Translate, summarize, then build slides"` in one command, send three sequential commands so you can review each result.
+
+---
+
+## 6. Known limitations
+
+- **Higher latency**: Hub calls downstream agents over HTTP → each command is ~2–5 seconds slower than calling the agent directly.
+- **No streaming**: you won't see text appear gradually — you must wait for the full result.
+- **Canvas Designer & Resume Evaluator not yet connected**: you must use their standalone pages.
+- **Session state grows**: the longer the conversation, the more Hub has to compress history — memory quality degrades after ~30 turns. We recommend starting a new session when switching to a major new topic.
+- **No undo**: if a request is wrong, send a new one — Hub has no "undo" button for actions already executed.

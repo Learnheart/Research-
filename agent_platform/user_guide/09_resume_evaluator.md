@@ -1,190 +1,190 @@
-# The Resume Evaluator — Đánh giá CV ứng viên
+# The Resume Evaluator — Candidate CV evaluation
 
-> Đánh giá CV vs JD theo 6 tiêu chí, đưa quyết định INTERVIEW / CONDITIONAL / DO_NOT_INTERVIEW, kèm câu hỏi phỏng vấn gợi ý. Hỗ trợ batch tới 10 ứng viên với ranking.
+> Score CVs against a JD across 6 criteria, issue an INTERVIEW / CONDITIONAL / DO_NOT_INTERVIEW decision, and suggest interview questions. Supports batch evaluation up to 10 candidates with ranking.
 
 ---
 
-## 1. Giới thiệu khả năng
+## 1. Capabilities overview
 
-**The Resume Evaluator làm gì?** Giúp HR / Hiring Manager **screen CV nhất quán** bằng AI:
-- Chấm điểm theo 6 tiêu chí có trọng số.
-- Đưa quyết định: nên phỏng vấn hay không.
-- Phát hiện red flag, fit văn hoá, dấu hiệu CV viết bằng AI.
-- Đề xuất câu hỏi phỏng vấn + reference check.
-- Export DOCX báo cáo từng ứng viên.
+**What does The Resume Evaluator do?** It helps HR / Hiring Managers **screen CVs consistently** with AI:
+- Scores against 6 weighted criteria.
+- Issues a decision: should you interview or not?
+- Detects red flags, culture fit, and signals that the CV was AI-written.
+- Suggests interview questions + reference-check prompts.
+- Exports a per-candidate DOCX report.
 
-**Khi nào dùng?**
-- Bạn nhận 5–10 CV cho một vị trí, cần screen nhanh.
-- Bạn muốn đánh giá khách quan, giảm bias.
-- Bạn cần báo cáo ngắn cho hiring committee.
+**When to use it**
+- You received 5–10 CVs for one role and need fast screening.
+- You want objective evaluation to reduce bias.
+- You need a short report for the hiring committee.
 
 **Input**
-- 1 hoặc nhiều CV (PDF, DOCX, TXT) — tối đa 10 / lần.
-- Job description (text, paste hoặc gõ).
+- 1 or more CVs (PDF, DOCX, TXT) — up to 10 per batch.
+- Job description (text, pasted or typed).
 
 **Output**
 - **Score card**: decision + overall score + confidence.
-- **Radar chart** 6 tiêu chí.
-- **Detailed breakdown**: red flags, culture fit, authenticity, interview questions, reference check prompts.
-- **Báo cáo DOCX** tải về cho từng ứng viên.
-- **Batch ranking**: nếu chấm nhiều CV, có bảng xếp hạng + skill gap analysis.
+- **Radar chart** across 6 criteria.
+- **Detailed breakdown**: red flags, culture fit, authenticity, interview questions, reference-check prompts.
+- **DOCX report** downloadable per candidate.
+- **Batch ranking**: if you evaluate several CVs, you get a ranking table + skill-gap analysis.
 
 ---
 
-## 2. Giới hạn & điều kiện sử dụng
+## 2. Limits & prerequisites
 
-| Mục | Giới hạn |
+| Item | Limit |
 | --- | --- |
-| Định dạng CV | PDF, DOCX, TXT |
-| CV mỗi batch | Tối đa **10** ứng viên |
-| Độ dài CV & JD | Mỗi cái tối đa **50.000 ký tự** (truncate nếu vượt) |
-| Xử lý batch | **Tuần tự**, không song song — 10 CV mất nhiều thời gian |
-| Báo cáo | Format **DOCX** (không phải PDF, dù tên hàm có "pdf") |
-| Cache | Không có — cùng CV chấm lại sẽ chạy lại từ đầu |
-| Đăng nhập | SSO bắt buộc |
+| CV formats | PDF, DOCX, TXT |
+| CVs per batch | Up to **10** candidates |
+| CV & JD length | Each up to **50,000 characters** (truncated beyond that) |
+| Batch processing | **Sequential**, not parallel — 10 CVs take significant time |
+| Report | **DOCX** format (not PDF, despite the function name) |
+| Cache | None — re-evaluating the same CV runs from scratch |
+| Authentication | SSO required |
 
 ---
 
-## 3. Cách sử dụng (Step-by-step)
+## 3. How to use (step-by-step)
 
-### A. Đánh giá đơn lẻ (1 CV)
+### A. Single evaluation (1 CV)
 
-#### Bước 1 — Mở The Resume Evaluator
-![Giao diện chính](./images/resume-01-home.png)
-*Hình 1: JD ở panel trái, upload CV ở panel phải.*
+#### Step 1 — Open The Resume Evaluator
+![Main interface](./images/resume-01-home.png)
+*Figure 1: JD on the left panel, CV upload on the right.*
 
-#### Bước 2 — Nhập Job Description
-Paste JD vào ô bên trái. Có thể paste cả phần requirement + responsibilities.
+#### Step 2 — Enter the Job Description
+Paste the JD into the left box. You can include requirements and responsibilities.
 
-#### Bước 3 — Upload CV
-Kéo-thả 1 file (PDF/DOCX/TXT).
+#### Step 3 — Upload the CV
+Drag and drop one file (PDF/DOCX/TXT).
 
-#### Bước 4 — Bấm "Evaluate"
-Agent parse CV, gửi cả CV + JD vào LLM với prompt evaluation chuyên dụng. Mất ~20–40 giây.
+#### Step 4 — Click "Evaluate"
+The agent parses the CV and sends both CV + JD to the LLM with a dedicated evaluation prompt. Takes ~20–40 seconds.
 
-#### Bước 5 — Xem score card
+#### Step 5 — Review the score card
 - **Decision**: `INTERVIEW` / `CONDITIONAL` / `DO_NOT_INTERVIEW`.
 - **Score**: 0–100.
 - **Confidence**: High / Medium / Low.
 - **Title match**: Direct / Adjacent / Off-title.
 
 ![Score card](./images/resume-02-scorecard.png)
-*Hình 2: Score card chính với decision + score + confidence.*
+*Figure 2: Headline score card with decision + score + confidence.*
 
-#### Bước 6 — Xem breakdown chi tiết
-- **Radar chart 6 tiêu chí**.
-- **Red flags** với severity (High / Medium / Low).
+#### Step 6 — Review the detailed breakdown
+- **Radar chart across 6 criteria**.
+- **Red flags** with severity (High / Medium / Low).
 - **Culture fit assessment**.
-- **Authenticity** (xác suất CV viết bằng AI).
+- **Authenticity** (probability the CV was AI-written).
 - **Suggested interview questions**.
-- **Reference check prompts**.
+- **Reference-check prompts**.
 
 ![Detailed breakdown](./images/resume-03-breakdown.png)
-*Hình 3: Radar chart + các block đánh giá nâng cao.*
+*Figure 3: Radar chart + the deeper evaluation blocks.*
 
-#### Bước 7 — Download Report
-Bấm "Download Report" → tải `.docx` báo cáo cho ứng viên này.
+#### Step 7 — Download Report
+Click "Download Report" → grab the `.docx` report for that candidate.
 
-### B. Đánh giá batch (nhiều CV)
+### B. Batch evaluation (multiple CVs)
 
-#### Bước 1 — Paste JD như trên
-#### Bước 2 — Upload nhiều CV (tối đa 10)
+#### Step 1 — Paste the JD as before
+#### Step 2 — Upload multiple CVs (up to 10)
 
 ![Batch upload](./images/resume-04-batch-upload.png)
-*Hình 4: Danh sách 10 CV sẵn sàng.*
+*Figure 4: List of 10 CVs ready to evaluate.*
 
-#### Bước 3 — Bấm "Evaluate All"
-Agent chấm **tuần tự**. Progress bar hiển thị: `Đang chấm 4/10 — Nguyễn Văn A`.
+#### Step 3 — Click "Evaluate All"
+The agent processes them **sequentially**. The progress bar shows: `Evaluating 4/10 — Nguyen Van A`.
 
-#### Bước 4 — Xem bảng ranking
-Ứng viên sắp xếp theo overall score giảm dần, kèm 1 strength + 1 concern key cho mỗi người.
+#### Step 4 — View the ranking table
+Candidates are ranked by overall score (descending), each with 1 key strength + 1 key concern.
 
 ![Ranking](./images/resume-05-ranking.png)
-*Hình 5: Bảng xếp hạng 10 ứng viên.*
+*Figure 5: Ranking table for 10 candidates.*
 
-#### Bước 5 — Skill gap analysis
-Block hiển thị các requirement của JD **không** ứng viên nào đáp ứng được — gợi ý cần mở rộng tuyển dụng hay điều chỉnh JD.
+#### Step 5 — Skill-gap analysis
+A block lists the JD requirements that **no** candidate satisfied — useful for deciding whether to widen the search or adjust the JD.
 
-#### Bước 6 — Download
-- Từng báo cáo riêng (mỗi ứng viên 1 DOCX).
-- Hoặc ZIP toàn bộ + comparison summary.
+#### Step 6 — Download
+- Individual reports (one DOCX per candidate).
+- Or ZIP everything + a comparison summary.
 
 ---
 
-## 4. Kịch bản minh hoạ (User Journeys)
+## 4. Walkthroughs (User Journeys)
 
-### Kịch bản 1 — Screen nhanh 1 CV trước phone interview
+### Journey 1 — Quick screen of 1 CV before a phone interview
 
-**Bối cảnh:** Recruiter gửi CV `Nguyen_Van_A.pdf` cho vị trí Senior Data Engineer. Bạn muốn 2 phút screen trước khi gọi.
+**Context:** A recruiter sent `Nguyen_Van_A.pdf` for a Senior Data Engineer role. You want a 2-minute screen before the call.
 
-**Bước thực hiện:**
-1. Mở Resume Evaluator → paste JD `"Senior Data Engineer — 5+ years Spark/Databricks, Python..."`.
+**Steps:**
+1. Open the Resume Evaluator → paste the JD `"Senior Data Engineer — 5+ years Spark/Databricks, Python..."`.
 2. Upload `Nguyen_Van_A.pdf`.
-3. Bấm Evaluate → đợi 30 giây.
-4. Nhận: **Decision: INTERVIEW**, Score: 82, Confidence: High, Title match: Direct.
+3. Click Evaluate → wait 30 seconds.
+4. Result: **Decision: INTERVIEW**, Score: 82, Confidence: High, Title match: Direct.
 5. Radar: Skills 85%, Experience 90%, Achievement 75%, Transferability 70%, Online 60%, Education 80%.
 6. Red flags: 1 medium — `"Job hopping — 3 jobs in last 3 years"`.
-7. Suggested questions: 5 câu, copy 2 câu vào script phone screen.
-8. Gọi điện với context chuẩn bị sẵn.
+7. Suggested questions: 5 prompts; copy 2 into your phone-screen script.
+8. Make the call with the context already prepared.
 
 ---
 
-### Kịch bản 2 — Batch screen 8 ứng viên
+### Journey 2 — Batch screen 8 candidates
 
-**Bối cảnh:** 8 CV cho vị trí Product Manager. Cần shortlist 3 cho on-site.
+**Context:** 8 CVs for a Product Manager role. You need to shortlist 3 for on-site interviews.
 
-**Bước thực hiện:**
-1. Paste JD.
-2. Upload cả 8 CV.
-3. Bấm Evaluate All → đợi ~5 phút (tuần tự).
-4. Ranking trả về:
+**Steps:**
+1. Paste the JD.
+2. Upload all 8 CVs.
+3. Click Evaluate All → wait ~5 minutes (sequential).
+4. The ranking:
    - #1: 88 — INTERVIEW (Direct match, strong product cases)
    - #2: 81 — INTERVIEW (Adjacent — fintech background)
    - #3: 76 — INTERVIEW
    - #4–6: 60–72 — CONDITIONAL
    - #7–8: <60 — DO_NOT_INTERVIEW
-5. Skill gap analysis: `"None of the candidates have B2B SaaS experience"` → cân nhắc mở rộng JD hoặc tìm pool khác.
-6. Download ZIP báo cáo top 3.
-7. Gửi cho hiring committee cùng comparison summary.
+5. Skill-gap analysis: `"None of the candidates have B2B SaaS experience"` → consider widening the JD or searching another pool.
+6. Download the top-3 ZIP report.
+7. Send to the hiring committee with the comparison summary.
 
 ---
 
-### Kịch bản 3 — Phát hiện CV viết bằng AI
+### Journey 3 — Detect an AI-written CV
 
-**Bối cảnh:** CV có wording quá hoàn hảo, bạn nghi viết bằng ChatGPT.
+**Context:** A CV reads too polished — you suspect ChatGPT was used.
 
-**Bước thực hiện:**
-1. Evaluate CV.
-2. Vào block **Authenticity Assessment**:
+**Steps:**
+1. Evaluate the CV.
+2. Open the **Authenticity Assessment** block:
    - AI-generation likelihood: **High (78%)**.
-   - Specificity: Low — `"Phần lớn achievements là phrase chung chung, ít số liệu cụ thể"`.
+   - Specificity: Low — `"Most achievements are generic phrases with few concrete numbers"`.
    - Buzzword density: High.
-   - Internal consistency: dates không khớp.
-3. Quyết định: vẫn phỏng vấn nhưng dùng câu hỏi gợi ý focus vào "tell me about a specific time..." để verify.
+   - Internal consistency: dates don't line up.
+3. Decision: still interview, but use the suggested "tell me about a specific time..." questions to verify.
 
 ---
 
-## 5. Tips sử dụng
+## 5. Usage tips
 
-- **JD càng rõ, đánh giá càng đúng**: paste full JD (requirements + nice-to-have + responsibilities), không chỉ tiêu đề.
-- **6 tiêu chí có trọng số cố định** (Skills 25%, Experience 20%, Achievement 20%, Education 15%, Transferability 10%, Online Presence 10%) — không tuỳ biến từ UI.
-- **Score < 60 = DO_NOT_INTERVIEW**: nhưng đừng auto-reject — đọc breakdown để chắc agent không miss context (ví dụ CV ngắn vì junior, không phải vì thiếu).
-- **High AI-generation likelihood KHÔNG = từ chối ngay** — chỉ là tín hiệu cần verify trong phỏng vấn.
-- **Transferability score cao** với title không trực tiếp đáng để xem xét — agent đánh giá conceptual overlap.
-- **Batch processing là tuần tự** — 10 CV có thể mất ~5 phút. Không refresh trang.
-- **Báo cáo DOCX có thể edit** trong Word — có thể paste comment HR / recruiter trước khi gửi hiring committee.
-- **Re-evaluate cùng CV sẽ ra điểm gần như nhau** nhưng không hoàn toàn deterministic — nếu cần consistency tuyệt đối, lưu báo cáo lần đầu thay vì chạy lại.
+- **The clearer the JD, the more accurate the evaluation**: paste the full JD (requirements + nice-to-have + responsibilities), not just the title.
+- **The 6 criteria use fixed weights** (Skills 25%, Experience 20%, Achievement 20%, Education 15%, Transferability 10%, Online Presence 10%) — no UI customization.
+- **Score < 60 = DO_NOT_INTERVIEW**: but don't auto-reject — read the breakdown to make sure the agent didn't miss context (e.g., a short CV because the candidate is junior, not unqualified).
+- **High AI-generation likelihood is NOT auto-reject** — it's only a signal to verify during the interview.
+- **High Transferability with a non-direct title** is worth a look — the agent evaluates conceptual overlap.
+- **Batch processing is sequential** — 10 CVs may take ~5 minutes. Don't refresh the page.
+- **The DOCX report is editable** in Word — paste HR/recruiter comments before sending to the hiring committee.
+- **Re-evaluating the same CV produces nearly identical scores** but not fully deterministic — for strict consistency, save the first report instead of re-running.
 
 ---
 
-## 6. Hạn chế đã biết
+## 6. Known limitations
 
-- **Tối đa 10 CV / batch, tuần tự**: batch lớn (50+ CV) phải chia thành nhiều lần.
-- **CV bị cắt ở 50.000 ký tự**: CV bình thường không vấn đề, nhưng portfolio CV của senior có thể bị truncate.
-- **Báo cáo là DOCX, không phải PDF**: phải Export-as-PDF từ Word nếu cần PDF.
-- **Không cache**: cùng CV chấm lại tốn LLM call mới.
-- **Không tính toán bias** theo cách chính thức: agent cố giảm bias nhưng không có audit / metric chính thức về fairness.
-- **Không hỗ trợ video resume / portfolio website**: chỉ đọc text trong file CV.
-- **Trọng số 6 tiêu chí cố định**: không tuỳ chỉnh theo vai trò (vd. vai trò sales nên weight Achievement cao hơn — hiện chưa có).
-- **Score có thể trôi nhẹ giữa các lần chạy** (LLM không 100% deterministic) — không dùng làm tiêu chí pháp lý.
-- **Không tích hợp ATS** — phải tự upload thủ công.
+- **Up to 10 CVs per batch, sequential**: large batches (50+) must be split into multiple runs.
+- **CVs are truncated at 50,000 characters**: normal CVs are fine, but a senior portfolio CV may be cut.
+- **Reports are DOCX, not PDF**: use Word's Export-as-PDF if PDF is required.
+- **No cache**: re-evaluating the same CV consumes new LLM calls.
+- **No formal bias metric**: the agent tries to reduce bias but has no official audit / fairness metric.
+- **No video resume / portfolio website support**: only text inside the CV file is read.
+- **The 6-criteria weights are fixed**: not customizable per role (e.g., sales roles arguably should weight Achievement higher — not yet supported).
+- **Scores may drift slightly across runs** (the LLM is not 100% deterministic) — do not use as a legal criterion.
+- **No ATS integration** — upload manually.

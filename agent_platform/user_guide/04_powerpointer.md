@@ -1,175 +1,175 @@
-# The Powerpoint-er — Tạo slide thương hiệu công ty
+# The Powerpoint-er — Generate branded slides
 
-> Mô tả chủ đề → AI sinh outline → preview HTML → tải file `.pptx`. Pipeline 3 bước có chỉnh sửa nội dung và AI edit bằng ngôn ngữ tự nhiên.
+> Describe a topic → AI drafts the outline → preview as HTML → download the `.pptx`. A 3-step pipeline with content editing and natural-language AI edits.
 
 ---
 
-## 1. Giới thiệu khả năng
+## 1. Capabilities overview
 
-**The Powerpoint-er làm gì?** Sinh nhanh một bộ slide thương hiệu công ty từ mô tả ngắn, không cần kỹ năng thiết kế.
+**What does The Powerpoint-er do?** It quickly produces a branded slide deck from a short description — no design skills required.
 
-**Khi nào dùng?**
-- Bạn cần bản nháp slide trong 5–10 phút trước cuộc họp.
-- Bạn muốn slide có nhận diện thương hiệu (màu đỏ, logo, footer) mà không phải tự dựng template.
-- Bạn cần biến một outline có sẵn thành slide chỉn chu.
+**When to use it**
+- You need a draft deck in 5–10 minutes before a meeting.
+- You want slides that follow corporate branding (red palette, logo, footer) without building a template.
+- You want to turn an existing outline into a polished deck.
 
 **Input**
-- Chủ đề (topic).
-- Đối tượng nghe (audience).
-- Số slide mong muốn (5–15).
-- Tuỳ chọn: bật/tắt khung template thương hiệu.
+- Topic.
+- Audience.
+- Desired slide count (5–15).
+- Optional: enable/disable the branded template frame.
 
 **Output**
-- File `.pptx` 13.33" × 7.5" (16:9) tải về máy.
-- Outline JSON xem trước trên web trước khi build.
+- A `.pptx` file, 13.33" × 7.5" (16:9), downloaded to your machine.
+- An outline JSON you can preview on the web before building.
 
-**Cấu trúc slide hỗ trợ:**
-- **Cover** — bìa với background thương hiệu.
-- **Section** — slide ngăn cách kiểu divider.
-- **Content** — 3 biến thể: `data` (KPI/số liệu), `concept` (nguyên lý), `process` (timeline/workflow).
-- **Summary** — slide kết với takeaways.
+**Supported slide types:**
+- **Cover** — title slide with branded background.
+- **Section** — divider-style section break.
+- **Content** — 3 variants: `data` (KPIs/numbers), `concept` (principles), `process` (timeline/workflow).
+- **Summary** — closing slide with takeaways.
 
 ---
 
-## 2. Giới hạn & điều kiện sử dụng
+## 2. Limits & prerequisites
 
-| Mục | Giới hạn |
+| Item | Limit |
 | --- | --- |
-| Số slide | **5–15** mỗi bộ |
-| Topic | Phải vượt qua input guardrail (Haiku phân loại) |
-| Output guardrail | Áp dụng — nội dung không phù hợp sẽ bị chặn |
-| **Khả năng edit sau khi tải** | **PPTX xuất ra là image-based — KHÔNG edit được text/shape trong PowerPoint** |
-| Timeout build | 5 phút (toàn bộ bộ slide), 60 giây/slide khi regenerate |
-| Đăng nhập | SSO bắt buộc |
+| Slide count | **5–15** per deck |
+| Topic | Must pass the input guardrail (Haiku-based classifier) |
+| Output guardrail | Applied — inappropriate content is blocked |
+| **Post-download editability** | **The exported PPTX is image-based — text/shapes CANNOT be edited in PowerPoint** |
+| Build timeout | 5 minutes (full deck), 60 seconds/slide when regenerating |
+| Authentication | SSO required |
 
-> ⚠️ **Lưu ý quan trọng:** Mỗi slide được render thành ảnh PNG rồi nhúng vào PPTX. Khi mở trong PowerPoint, bạn chỉ thấy ảnh — không sửa được text trực tiếp. Mọi chỉnh sửa cần thực hiện **trên web trước khi tải**.
+> ⚠️ **Important note:** Each slide is rendered to a PNG and embedded in the PPTX. In PowerPoint, you'll only see images — text cannot be edited directly. All edits must be done **on the web before downloading**.
 
 ---
 
-## 3. Cách sử dụng (Step-by-step)
+## 3. How to use (step-by-step)
 
-Quy trình 3 bước: **Brief → Outline → Preview**.
+The 3-step flow: **Brief → Outline → Preview**.
 
-### Bước 1 — Brief
+### Step 1 — Brief
 
-- Nhập **topic**: ví dụ `"Chiến lược AI 2026"`.
-- Nhập **audience**: ví dụ `"Hội đồng quản trị"`.
-- Chọn **số slide**: 5–15.
-- Bật/tắt **Use template** (thường để bật).
+- Enter the **topic**: e.g., `"AI strategy 2026"`.
+- Enter the **audience**: e.g., `"Board of Directors"`.
+- Pick the **slide count**: 5–15.
+- Toggle **Use template** (typically left on).
 
-![Form Brief](./images/powerpointer-01-brief.png)
-*Hình 1: Form nhập chủ đề, audience, số slide.*
+![Brief form](./images/powerpointer-01-brief.png)
+*Figure 1: Form for entering topic, audience, slide count.*
 
-### Bước 2 — Outline
+### Step 2 — Outline
 
-- Bấm "Generate Outline" → AI sinh outline JSON: title + bullet cho từng slide.
-- Bạn có thể:
-  - Sửa tiêu đề/bullet trực tiếp.
-  - Thêm / xoá / đổi thứ tự slide.
-  - Đổi loại slide (cover, section, content, summary).
-  - Đổi variant của content (data / concept / process).
-  - Bấm "Preview slide này" để render thử từng slide.
+- Click "Generate Outline" → AI produces an outline JSON: title + bullets per slide.
+- You can:
+  - Edit titles/bullets in place.
+  - Add / remove / reorder slides.
+  - Change the slide type (cover, section, content, summary).
+  - Switch the content variant (data / concept / process).
+  - Click "Preview this slide" to render any individual slide.
 
 ![Outline editor](./images/powerpointer-02-outline.png)
-*Hình 2: Outline có thể chỉnh trực tiếp trước khi build.*
+*Figure 2: The outline can be edited directly before building.*
 
-### Bước 3 — Preview
+### Step 3 — Preview
 
-- Bấm "Build" → tất cả slide được render song song thành HTML.
-- Grid hiển thị tất cả slide ở dạng thumbnail.
-- Hai lựa chọn edit cho mỗi slide:
-  - **Rich Editor** (visual): in đậm, nghiêng, gạch dưới, đổi màu, đổi cỡ chữ, căn lề, bullet.
-  - **AI Edit** (ngôn ngữ tự nhiên): gõ `"Đổi sang dạng timeline 4 mốc"` → AI viết lại slide.
-- **Regenerate**: sinh lại slide với cùng outline nhưng version khác.
-- **Presentation Mode**: xem fullscreen, phím mũi tên để chuyển slide.
+- Click "Build" → all slides render in parallel as HTML.
+- A grid shows every slide as a thumbnail.
+- Two editing modes per slide:
+  - **Rich Editor** (visual): bold, italic, underline, color, font size, alignment, bullets.
+  - **AI Edit** (natural language): type `"Convert to a 4-step timeline"` → the AI rewrites the slide.
+- **Regenerate**: rebuild the slide from the same outline but a different version.
+- **Presentation Mode**: full-screen view, use arrow keys to navigate.
 
 ![Preview grid + AI edit](./images/powerpointer-03-preview.png)
-*Hình 3: Grid preview slide, modal edit gồm tab Rich Editor và AI Edit.*
+*Figure 3: Slide preview grid; the edit modal has Rich Editor and AI Edit tabs.*
 
-### Bước 4 — Export
+### Step 4 — Export
 
-- Bấm "Export to PPTX".
-- Frontend capture từng slide thành PNG, gói lại thành `.pptx`.
-- Link/URL trong slide vẫn click được (overlay hyperlink).
+- Click "Export to PPTX".
+- The frontend captures each slide as PNG and packages everything into a `.pptx`.
+- Links/URLs inside slides remain clickable (hyperlink overlay).
 
 ![Export PPTX](./images/powerpointer-04-export.png)
-*Hình 4: Nút export — file tải về máy ngay.*
+*Figure 4: Export button — the file downloads to your machine immediately.*
 
 ---
 
-## 4. Kịch bản minh hoạ (User Journeys)
+## 4. Walkthroughs (User Journeys)
 
-### Kịch bản 1 — Bản nháp slide chiến lược 10 trang trong 10 phút
+### Journey 1 — A 10-slide strategy draft in 10 minutes
 
-**Bối cảnh:** Sếp hỏi `"Có gì để present về AI strategy 2026 không?"` lúc 14h, họp lúc 15h.
+**Context:** Your boss asks at 2pm `"Do you have anything to present on AI strategy 2026?"`. The meeting is at 3pm.
 
-**Bước thực hiện:**
-1. Mở Powerpoint-er.
+**Steps:**
+1. Open the Powerpoint-er.
 2. Brief:
-   - Topic: `"Chiến lược AI 2026 — ứng dụng cho hoạt động ngân hàng"`.
-   - Audience: `"Ban điều hành"`.
-   - Số slide: `10`.
+   - Topic: `"AI strategy 2026 — applications in banking operations"`.
+   - Audience: `"Executive board"`.
+   - Slide count: `10`.
    - Use template: ✅
-3. Bấm Generate Outline → ~20 giây.
-   ![Outline cho strategy deck](./images/powerpointer-scn1-outline.png)
-   *Hình: Outline 10 slide — cover, 2 section, 6 content (mix data/concept/process), 1 summary.*
-4. Review outline, đổi slide 5 từ `concept` sang `data` (vì muốn KPI cụ thể) → bấm regenerate riêng slide 5.
-5. Bấm Build → ~2 phút cho toàn bộ.
-6. Preview, dùng AI Edit cho slide bìa: `"Đổi title thành 'AI 2026: From Pilot to Production'"`.
-7. Export → tải `chien_luoc_AI_2026.pptx`.
+3. Click Generate Outline → ~20 seconds.
+   ![Strategy deck outline](./images/powerpointer-scn1-outline.png)
+   *Figure: 10-slide outline — cover, 2 sections, 6 content slides (mix of data/concept/process), 1 summary.*
+4. Review the outline, switch slide 5 from `concept` to `data` (you want hard KPIs) → regenerate just slide 5.
+5. Click Build → ~2 minutes for the full deck.
+6. Preview, use AI Edit on the cover: `"Change the title to 'AI 2026: From Pilot to Production'"`.
+7. Export → download `AI_strategy_2026.pptx`.
 
 ---
 
-### Kịch bản 2 — Sinh slide từ outline đã có
+### Journey 2 — Build slides from an existing outline
 
-**Bối cảnh:** Bạn đã có outline 8 slide viết tay, muốn AI dựng visual nhanh.
+**Context:** You already have an 8-slide outline written by hand and want AI to do the visuals quickly.
 
-**Bước thực hiện:**
-1. Brief với topic chung chung (vì AI sẽ ghi đè bằng outline của bạn).
-2. Generate Outline → sửa từng slide thành đúng nội dung của bạn:
+**Steps:**
+1. Brief with a generic topic (the AI's outline will be overwritten by yours).
+2. Generate Outline → edit each slide to match yours:
    - Slide 1: cover — `"Q1 Performance Review"`
    - Slide 2: section — `"Highlights"`
-   - Slide 3: content/data — `"Revenue grew 15% QoQ"` + bullet số liệu
+   - Slide 3: content/data — `"Revenue grew 15% QoQ"` + KPI bullets
    - ...
 3. Build → preview.
-4. AI Edit từng slide nếu chưa ưng — ví dụ: `"Thêm 1 cột so sánh với Q4 năm trước"`.
+4. Use AI Edit on any slide that isn't quite right — e.g., `"Add a comparison column with last year's Q4"`.
 5. Export.
 
 ---
 
-### Kịch bản 3 — Đổi style toàn bộ presentation
+### Journey 3 — Restyle an entire presentation
 
-**Bối cảnh:** Bạn xây xong 12 slide nhưng cảm thấy quá nặng số liệu, muốn nhiều concept hơn.
+**Context:** You've built 12 slides but the deck feels too data-heavy — you want more concept-style slides.
 
-**Bước thực hiện:**
-1. Quay lại Outline → đổi variant slide 4, 6, 9 từ `data` sang `concept`.
-2. Bấm regenerate cho 3 slide đó (không cần build lại toàn bộ).
-3. Preview lại — nội dung được viết lại theo phong cách concept/prose.
+**Steps:**
+1. Go back to Outline → switch slides 4, 6, 9 from `data` to `concept`.
+2. Regenerate just those 3 slides (no need to rebuild everything).
+3. Re-preview — the content has been rewritten in a concept/prose style.
 4. Export.
 
 ---
 
-## 5. Tips sử dụng
+## 5. Usage tips
 
-- **Brief càng chi tiết → outline càng tốt**: thêm context như `"company is a Vietnamese commercial bank, target audience knows AI basics"` ngay trong topic.
-- **Variant matters**: 
-  - `data` cho KPI, biểu đồ, so sánh con số.
-  - `concept` cho nguyên lý, framework, văn bản dài.
-  - `process` cho timeline, workflow, các bước.
-- **AI Edit dùng câu lệnh ngắn**: `"Đổi sang dạng 4 quadrant"`, `"Thêm icon"`, `"Bỏ slide này"` — rõ ràng hơn câu dài phức tạp.
-- **Edit toàn bộ trên web TRƯỚC khi export** — vì PPTX export không edit được.
-- **Cần edit native trong PowerPoint?** Hiện tại không có cách — đây là hạn chế đã biết, team đang tìm giải pháp.
-- **Regenerate vs Edit**: regenerate là sinh lại hoàn toàn (mất nội dung custom), edit là tinh chỉnh. Cẩn thận khi regenerate slide đã chỉnh tay.
-- **Presentation Mode** trên web có thể dùng thay PowerPoint để demo ngay — không nhất thiết phải export.
+- **The more detailed the brief, the better the outline**: include context like `"company is a Vietnamese commercial bank, target audience knows AI basics"` right in the topic.
+- **Variants matter**:
+  - `data` for KPIs, charts, numerical comparisons.
+  - `concept` for principles, frameworks, prose.
+  - `process` for timelines, workflows, step-by-step.
+- **Use short AI Edit commands**: `"Convert to a 4-quadrant layout"`, `"Add icons"`, `"Drop this slide"` — clearer than long, complex sentences.
+- **Edit everything on the web BEFORE exporting** — the PPTX export is not editable.
+- **Need to edit natively in PowerPoint?** Not possible today — this is a known limitation; the team is exploring solutions.
+- **Regenerate vs. Edit**: regenerate rebuilds from scratch (loses custom content); edit fine-tunes. Be careful regenerating slides you've hand-tuned.
+- **Presentation Mode** in the web app can replace PowerPoint for live demos — exporting is not always necessary.
 
 ---
 
-## 6. Hạn chế đã biết
+## 6. Known limitations
 
-- **PPTX là image-based**: không edit được text/shape sau khi tải. Bù lại là toàn bộ editor trên web.
-- **Số slide bị giới hạn 5–15**: bộ slide lớn hơn cần chia làm nhiều lần build (gộp thủ công).
-- **Guardrail có thể chặn topic nhạy cảm**: nếu bị từ chối ở bước outline (HTTP 400), thử rephrase topic.
-- **Web search disabled trong UI**: backend hỗ trợ `use_web_search` nhưng UI hiện không bật — slide dựa vào kiến thức nội tại của LLM, không có dữ liệu realtime.
-- **Không bookmark template tự chỉnh**: tất cả slide dùng chung template thương hiệu cố định — chưa cho upload template riêng.
-- **Slide bị fallback khi LLM lỗi**: nếu một slide gặp lỗi LLM, agent dùng `fallback_html()` (text + bullet đơn giản, không có visual) — cần regenerate slide đó.
-- **Không hỗ trợ font/ngôn ngữ tuỳ chỉnh**: font dùng theo brand token đã định sẵn.
+- **PPTX is image-based**: text/shapes are not editable after download. The trade-off is the rich web editor.
+- **Slide count is capped at 5–15**: larger decks must be built in multiple passes (and merged manually).
+- **The guardrail may block sensitive topics**: if you're rejected at the outline step (HTTP 400), try rephrasing the topic.
+- **Web search disabled in UI**: the backend supports `use_web_search`, but the UI does not expose it — slides rely on the LLM's internal knowledge, not real-time data.
+- **No custom templates yet**: every deck uses the fixed branded template — no user-uploaded template support.
+- **Slides fall back on LLM errors**: if a slide hits an LLM failure, the agent uses `fallback_html()` (plain text + bullets, no visuals) — regenerate that slide.
+- **No custom fonts/languages**: fonts follow the predefined brand tokens.

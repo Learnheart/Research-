@@ -1,168 +1,168 @@
-# The Brainstormer — Đối tác brainstorming có canvas
+# The Brainstormer — Brainstorming partner with a live canvas
 
-> AI hỏi câu hỏi Socratic theo 4 bước. Canvas trực quan cập nhật theo thời gian thực: vấn đề → các lựa chọn → action plan.
+> The AI asks Socratic questions across 4 stages. A visual canvas updates in real time: problem → options → action plan.
 
 ---
 
-## 1. Giới thiệu khả năng
+## 1. Capabilities overview
 
-**The Brainstormer làm gì?** Đóng vai một đối tác brainstorming. Thay vì đưa ra câu trả lời ngay, AI hỏi các câu Socratic để bạn tự đào sâu — và đồng bộ một **canvas trực quan** (vấn đề / lựa chọn / kế hoạch) theo từng lượt trò chuyện.
+**What does The Brainstormer do?** It plays the role of a thinking partner. Instead of handing you an answer, the AI asks Socratic questions so you can dig in yourself — while a **live canvas** (problem / options / action plan) is updated turn by turn.
 
-**Khi nào dùng?**
-- Bạn có một vấn đề chưa rõ ràng và muốn "nghĩ thấu" thay vì xin câu trả lời.
-- Bạn muốn so sánh 2–3 hướng đi với trade-off rõ.
-- Bạn cần một action plan có cấu trúc cho cuối phiên.
+**When to use it**
+- You have a fuzzy problem and want to "think it through" rather than ask for the answer.
+- You want to compare 2–3 directions with clear trade-offs.
+- You need a structured action plan by the end of the session.
 
 **Input**
-- Tin nhắn text mô tả vấn đề ban đầu.
-- Tiếp tục trả lời các câu hỏi của AI trong session.
+- A text message describing the initial problem.
+- Your responses to the AI's follow-up questions during the session.
 
 **Output**
-- Phản hồi text trong chat.
-- **Canvas** bên phải, cập nhật mỗi lượt:
-  - `problem`: vấn đề thực sự (1 câu).
-  - `options`: 2–3 lựa chọn kèm trade-off.
-  - `action_plan`: các bước cụ thể (xuất hiện ở cuối).
-- Session lưu lại → có thể quay lại tiếp tục.
+- Text replies in the chat.
+- A **canvas** on the right, updated each turn:
+  - `problem`: the real problem statement (one sentence).
+  - `options`: 2–3 options with trade-offs.
+  - `action_plan`: concrete steps (appears at the end).
+- Sessions are saved → you can return and continue later.
 
 ---
 
-## 2. Giới hạn & điều kiện sử dụng
+## 2. Limits & prerequisites
 
-| Mục | Giới hạn |
+| Item | Limit |
 | --- | --- |
-| Cấu trúc phiên | 4 bước cứng: Understand → Explore → Converge → Wrap up |
-| Số lượt trao đổi | AI sẽ **buộc kết thúc và đưa action plan** ở **lượt thứ 8** |
-| Nén lịch sử | Trên 10 message, lượt cũ được tóm tắt bằng Haiku |
-| Preferences | AI nhớ ngôn ngữ / tone / chủ đề **xuyên session** |
-| Đăng nhập | SSO bắt buộc |
+| Session structure | 4 fixed stages: Understand → Explore → Converge → Wrap up |
+| Turn count | The AI **forces a wrap-up and an action plan** on **turn 8** |
+| History compaction | Beyond 10 messages, older turns are summarized by Haiku |
+| Preferences | The AI remembers language / tone / topic **across sessions** |
+| Authentication | SSO required |
 
 ---
 
-## 3. Cách sử dụng (Step-by-step)
+## 3. How to use (step-by-step)
 
-### Bước 1 — Mở The Brainstormer
-Giao diện 2 panel: chat bên trái, canvas bên phải.
+### Step 1 — Open The Brainstormer
+A 2-panel UI: chat on the left, canvas on the right.
 
-![Giao diện chính](./images/brainstormer-01-home.png)
-*Hình 1: Chat trái + canvas phải. Canvas ban đầu trống.*
+![Main interface](./images/brainstormer-01-home.png)
+*Figure 1: Chat left + canvas right. The canvas starts empty.*
 
-### Bước 2 — Gõ vấn đề
-Ví dụ: `"Tôi muốn cải thiện trải nghiệm onboarding cho khách hàng mới"`.
+### Step 2 — State the problem
+Example: `"I want to improve the onboarding experience for new customers"`.
 
-### Bước 3 — Trả lời câu hỏi của AI (Step 1: Understand)
-**Lượt 1–3:** AI hỏi để hiểu mục tiêu thật:
+### Step 3 — Answer the AI's questions (Stage 1: Understand)
+**Turns 1–3:** the AI asks questions to surface the real goal:
 - *"What would change if you solved this?"*
 - *"Who feels this problem most acutely?"*
 
-Canvas hiện tại: `problem: null` (chưa khoá).
+Current canvas: `problem: null` (not yet locked in).
 
-![Bước Understand](./images/brainstormer-02-understand.png)
-*Hình 2: AI đặt câu hỏi Socratic, canvas đang trống.*
+![Understand stage](./images/brainstormer-02-understand.png)
+*Figure 2: The AI asks Socratic questions while the canvas remains empty.*
 
-### Bước 4 — Khám phá lựa chọn (Step 2: Explore)
-**Lượt 3–6:** AI đưa ra 2–3 hướng tiếp cận với trade-off.
+### Step 4 — Explore options (Stage 2: Explore)
+**Turns 3–6:** the AI proposes 2–3 directions with trade-offs.
 
-Canvas cập nhật:
+The canvas updates:
 ```
-problem: "Tỉ lệ khách hàng abandon trong tuần đầu cao do quy trình KYC dài"
+problem: "High abandonment in week 1 due to a lengthy KYC flow"
 options:
-  - "Số hoá KYC qua eKYC video"
-  - "Concierge onboarding cho khách VIP"
-  - "Self-service checklist đơn giản"
+  - "Digitize KYC via video eKYC"
+  - "Concierge onboarding for VIP customers"
+  - "Lightweight self-service checklist"
 ```
 
-![Canvas có options](./images/brainstormer-03-explore.png)
-*Hình 3: Canvas cập nhật với problem + 3 options.*
+![Canvas with options](./images/brainstormer-03-explore.png)
+*Figure 3: Canvas updated with the problem + 3 options.*
 
-### Bước 5 — Hội tụ (Step 3: Converge)
-**Lượt 6–8:** AI giúp đánh giá option vs mục tiêu — bạn loại bớt và refine.
+### Step 5 — Converge (Stage 3: Converge)
+**Turns 6–8:** the AI helps evaluate options against the goal — you eliminate some and refine the rest.
 
-### Bước 6 — Kết thúc với action plan (Step 4: Wrap up)
-**Lượt 8 trở đi:** AI bắt buộc đưa action plan cụ thể.
+### Step 6 — Wrap up with an action plan (Stage 4: Wrap up)
+**Turn 8 onward:** the AI commits to a concrete action plan.
 
-Canvas hoàn chỉnh:
+The completed canvas:
 ```
 problem: "..."
 options: ["...", "..."]
 action_plan:
-  - "Tuần 1: Map quy trình KYC hiện tại"
-  - "Tuần 2: PoC eKYC với vendor X"
-  - "Tuần 3: Test với 50 user"
+  - "Week 1: Map the current KYC flow"
+  - "Week 2: PoC eKYC with vendor X"
+  - "Week 3: Test with 50 users"
 ```
 
-Session được đánh dấu `completed: true`.
+The session is marked `completed: true`.
 
-![Action plan hoàn chỉnh](./images/brainstormer-04-actionplan.png)
-*Hình 4: Canvas cuối phiên có problem, options, action_plan.*
+![Completed action plan](./images/brainstormer-04-actionplan.png)
+*Figure 4: Final canvas with problem, options, and action_plan.*
 
-### Bước 7 — Lưu / Tiếp tục sau
+### Step 7 — Save / resume later
 
-- Session tự lưu — đóng tab không mất.
-- Sidebar trái liệt kê các session cũ → bấm để khôi phục toàn bộ chat + canvas.
+- Sessions auto-save — closing the tab doesn't lose anything.
+- The left sidebar lists past sessions → click to restore the full chat + canvas.
 
-![Sidebar session](./images/brainstormer-05-sessions.png)
-*Hình 5: Lịch sử session để mở lại.*
-
----
-
-## 4. Kịch bản minh hoạ (User Journeys)
-
-### Kịch bản 1 — Giải quyết vấn đề mơ hồ
-
-**Bối cảnh:** Bạn cảm thấy "team đang chậm" nhưng không rõ nguyên nhân.
-
-**Bước thực hiện:**
-1. Mở Brainstormer → `"Team tôi đang chậm, tôi cần improve nhưng chưa biết bắt đầu từ đâu"`.
-2. AI hỏi: *"Chậm so với baseline nào? Có metric cụ thể không?"* → bạn suy nghĩ và trả lời `"velocity giảm 30% so với quý trước"`.
-3. AI hỏi tiếp về nguyên nhân nghi ngờ → bạn nói `"có thể do morale, hoặc do tech debt"`.
-4. Lượt 4–5: AI đề xuất 3 hướng — fix morale (1-1 + offsite), giảm tech debt (1 sprint dành riêng), tách team thành 2 squad nhỏ.
-5. Lượt 6–7: AI giúp đánh giá theo cost/impact.
-6. Lượt 8: AI đưa action plan: tuần 1 chạy survey morale + audit tech debt → quyết định approach ở tuần 2.
+![Session sidebar](./images/brainstormer-05-sessions.png)
+*Figure 5: Session history for reopening later.*
 
 ---
 
-### Kịch bản 2 — So sánh 2 lựa chọn rõ ràng
+## 4. Walkthroughs (User Journeys)
 
-**Bối cảnh:** Bạn đang phân vân `"Build in-house vs buy SaaS"` cho công cụ phân tích.
+### Journey 1 — Tackle a vague problem
 
-**Bước thực hiện:**
-1. Vào Brainstormer → mô tả 2 option và budget.
-2. AI hỏi: *"Mục tiêu chính là tốc độ ra mắt hay tổng cost dài hạn?"*.
-3. Bạn trả lời → AI mở rộng: thêm option lai (`"build wrapper around SaaS"`).
-4. Converge: AI map ra cost / time / risk / strategic fit cho mỗi option.
-5. Action plan: 1 tuần PoC SaaS, song song đánh giá nội lực team build.
+**Context:** You feel "the team is slowing down" but aren't sure why.
 
----
-
-### Kịch bản 3 — Quay lại tiếp tục session cũ
-
-**Bối cảnh:** Tuần trước bạn brainstorm về "AI Adoption strategy", chưa xong. Hôm nay muốn tiếp.
-
-**Bước thực hiện:**
-1. Mở Brainstormer → sidebar chọn session `"AI Adoption — May 14"`.
-2. Toàn bộ chat + canvas khôi phục.
-3. Gõ tiếp: `"Tôi đã hỏi team Sales, họ ủng hộ option 2. Mình tiếp tục từ đó nhé"`.
-4. AI nhớ context, không hỏi lại từ đầu, chuyển sang refine action plan.
+**Steps:**
+1. Open the Brainstormer → `"My team is slowing down and I want to improve it but don't know where to start"`.
+2. AI asks: *"Slow compared to what baseline? Any concrete metric?"* → you think and answer `"velocity is down 30% vs. last quarter"`.
+3. AI follows up about suspected causes → you say `"maybe morale, or tech debt"`.
+4. Turns 4–5: the AI proposes 3 directions — fix morale (1:1 + offsite), reduce tech debt (one dedicated sprint), split the team into 2 smaller squads.
+5. Turns 6–7: the AI helps evaluate them along cost/impact.
+6. Turn 8: the AI produces the action plan: week 1 run a morale survey + tech-debt audit → decide the approach in week 2.
 
 ---
 
-## 5. Tips sử dụng
+### Journey 2 — Compare two clear options
 
-- **Khởi đầu bằng vấn đề, không bằng giải pháp**: `"Tôi muốn improve onboarding"` tốt hơn `"Tôi nên dùng eKYC không?"` — AI sẽ ép bạn nghĩ lại nếu bắt đầu bằng solution.
-- **Trả lời câu hỏi của AI thật**: AI không hỏi để câu giờ — câu trả lời ngắn 1 dòng cũng được, miễn là cụ thể.
-- **Đừng vội rush qua step Understand**: 2–3 lượt đầu quyết định chất lượng option phía sau.
-- **Quan sát canvas**: nếu canvas vẫn `problem: null` sau 3 lượt, AI thấy bạn chưa rõ vấn đề — đừng cố ép sang Explore.
-- **Tận dụng cross-session memory**: AI nhớ bạn thích trả lời tiếng Việt / tone trang trọng / hay nghĩ về fintech — không cần lặp lại preferences mỗi session.
-- **Khi muốn kết thúc sớm**: gõ `"Cho tôi action plan ngay"` ở bất kỳ lượt nào sau lượt 5 — AI sẽ tổng hợp với những gì đã có.
+**Context:** You're torn between `"build in-house vs. buy SaaS"` for an analytics tool.
+
+**Steps:**
+1. Enter the Brainstormer → describe both options and the budget.
+2. AI asks: *"Is the primary goal time-to-market or long-term total cost?"*.
+3. You answer → the AI broadens the option set (adding `"build a wrapper around SaaS"`).
+4. Converge: the AI maps cost / time / risk / strategic fit for each option.
+5. Action plan: 1-week SaaS PoC running in parallel with an internal team capability assessment.
 
 ---
 
-## 6. Hạn chế đã biết
+### Journey 3 — Resume an older session
 
-- **Buộc kết thúc ở lượt 8**: nếu vấn đề phức tạp cần > 8 lượt, AI sẽ ép action plan dù chưa đủ converge. Cách bù: tạo session mới cho phần sau.
-- **Canvas không free-form**: chỉ có 3 trường cố định (problem / options / action_plan) — không hỗ trợ matrix, mindmap, hay bảng so sánh chi tiết.
-- **Không tham chiếu tài liệu**: brainstormer không đọc file. Nếu cần context dữ liệu, dùng [Vaulter](./05_vaulter.md) song song.
-- **Một session không share được**: chỉ owner xem được — không có collaborative brainstorming.
-- **Compaction có thể mất nuance**: trên 10 message, lịch sử cũ bị tóm tắt — chi tiết tinh tế có thể mất khi resume sau nhiều lượt.
-- **Không export ra file**: action plan chỉ tồn tại trong canvas. Copy thủ công vào doc/sheet để theo dõi.
+**Context:** Last week you brainstormed "AI Adoption strategy" but didn't finish. You want to continue today.
+
+**Steps:**
+1. Open the Brainstormer → pick session `"AI Adoption — May 14"` from the sidebar.
+2. The full chat + canvas are restored.
+3. Type: `"I checked with the Sales team — they support option 2. Let's continue from there"`.
+4. The AI remembers context, doesn't re-ask from scratch, and moves on to refining the action plan.
+
+---
+
+## 5. Usage tips
+
+- **Start with the problem, not the solution**: `"I want to improve onboarding"` works better than `"Should I use eKYC?"` — the AI will push back if you open with a solution.
+- **Actually answer the AI's questions**: it isn't stalling — short one-line answers are fine as long as they are specific.
+- **Don't rush past the Understand stage**: the first 2–3 turns determine the quality of the options later.
+- **Watch the canvas**: if `problem: null` is still there after 3 turns, the AI thinks the problem isn't clear yet — don't force it to skip ahead.
+- **Lean on cross-session memory**: the AI remembers you prefer Vietnamese responses / a formal tone / fintech topics — you don't need to repeat preferences each session.
+- **Want to wrap up early?**: type `"Give me the action plan now"` at any turn after turn 5 — the AI will synthesize using what it has.
+
+---
+
+## 6. Known limitations
+
+- **Forced wrap-up at turn 8**: if the problem really needs more than 8 turns, the AI will force an action plan despite incomplete convergence. Workaround: open a fresh session for the next stage.
+- **Canvas is not free-form**: only 3 fixed fields (problem / options / action_plan) — no matrices, mindmaps, or comparison tables.
+- **No document reference**: the Brainstormer does not read files. If you need data context, use [Vaulter](./05_vaulter.md) alongside.
+- **Sessions are not shareable**: only the owner can see them — no collaborative brainstorming.
+- **Compaction can lose nuance**: beyond 10 messages, history is summarized — subtle details may be lost when you resume after many turns.
+- **No file export**: the action plan only lives on the canvas. Copy it manually into a doc/sheet to track.

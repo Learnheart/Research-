@@ -1,156 +1,156 @@
-# The Canvas Designer — Tạo hình ảnh & đồ hoạ từ mô tả
+# The Canvas Designer — Generate images & graphics from a description
 
-> Sinh visual (PNG/JPG), SVG, hoặc DOCX có thiết kế chỉ bằng một câu mô tả. Ảnh được render programmatic — có glow, gradient, particles theo 5 palette built-in.
+> Produce visuals (PNG/JPG), SVG, or designed DOCX from a single description. Images are rendered programmatically — with glow, gradients, and particles across 5 built-in palettes.
 
 ---
 
-## 1. Giới thiệu khả năng
+## 1. Capabilities overview
 
-**The Canvas Designer làm gì?** Biến mô tả text thành **hình ảnh hoặc tài liệu có thiết kế**:
-- PNG / JPG: ảnh nghệ thuật pixel art có hiệu ứng glow / gradient.
-- SVG: code SVG có thể nhúng vào web hoặc slide.
-- DOCX: tài liệu Word có cấu trúc đẹp (heading, bullet, format).
+**What does The Canvas Designer do?** It turns a text description into a **designed image or document**:
+- PNG / JPG: stylized art with glow / gradient effects.
+- SVG: SVG code you can embed in web pages or slides.
+- DOCX: a Word document with structure and formatting (headings, bullets, layout).
 
-**Khi nào dùng?**
-- Cần visual minh hoạ cho slide / report mà không có designer.
-- Cần infographic, icon, hoặc cover image cho tài liệu.
-- Cần một file Word có cấu trúc chuẩn từ outline.
+**When to use it**
+- You need a visual for a slide / report but have no designer.
+- You need an infographic, icon, or cover image for a document.
+- You need a well-structured Word file from an outline.
 
 **Input**
-- Mô tả văn bản (description).
+- A text description.
 - Output format: **PNG / JPG / SVG / DOCX**.
-- Style: `creative` (mặc định) hoặc các style khác tuỳ phiên bản.
-- Kích thước (mặc định: 1200×1200 cho PNG/JPG/SVG).
+- Style: `creative` (default) or other styles depending on the release.
+- Dimensions (default: 1200×1200 for PNG/JPG/SVG).
 
 **Output**
-- File tương ứng tải về (lưu trên Volume).
-- Preview hiển thị ngay trên web trước khi tải.
+- The corresponding file is downloaded (stored in the Volume).
+- A preview is shown directly in the web app before download.
 
 ---
 
-## 2. Giới hạn & điều kiện sử dụng
+## 2. Limits & prerequisites
 
-| Mục | Giới hạn |
+| Item | Limit |
 | --- | --- |
-| Định dạng output | PNG, JPG, SVG, DOCX |
-| Kích thước mặc định | 1200×1200 (tuỳ chỉnh được) |
-| LLM model | Opus cho PNG/JPG (chất lượng cao hơn), Sonnet cho SVG/DOCX |
-| Lưu trữ | Lưu theo `/canvas/{user}/{date}/canvas-{id}.{ext}` |
-| Tìm file cũ | Download chỉ tìm trong **ngày hôm nay** — file ngày khác có thể không tìm thấy |
-| Đăng nhập | SSO bắt buộc |
+| Output formats | PNG, JPG, SVG, DOCX |
+| Default size | 1200×1200 (customizable) |
+| LLM model | Opus for PNG/JPG (higher quality), Sonnet for SVG/DOCX |
+| Storage | Saved to `/canvas/{user}/{date}/canvas-{id}.{ext}` |
+| Finding older files | Download only searches **today's files** — files from other days may not be retrievable |
+| Authentication | SSO required |
 
 ---
 
-## 3. Cách sử dụng (Step-by-step)
+## 3. How to use (step-by-step)
 
-### Bước 1 — Mở The Canvas Designer
-![Giao diện](./images/canvas-01-home.png)
-*Hình 1: Panel mô tả bên trái, preview kết quả bên phải.*
+### Step 1 — Open The Canvas Designer
+![Interface](./images/canvas-01-home.png)
+*Figure 1: Description panel on the left, result preview on the right.*
 
-### Bước 2 — Mô tả hình ảnh
-Ví dụ: `"A futuristic robot with glowing neon eyes, cyberpunk style"`, `"Một biểu đồ tăng trưởng cách điệu hình rocket"`, `"Cover image cho deck về AI agent — phong cách tech, nhiều ánh sáng xanh"`.
+### Step 2 — Describe the image
+Examples: `"A futuristic robot with glowing neon eyes, cyberpunk style"`, `"A stylized growth chart shaped like a rocket"`, `"Cover image for an AI agent deck — tech aesthetic, lots of blue light"`.
 
-![Nhập mô tả](./images/canvas-02-prompt.png)
-*Hình 2: Ô mô tả + chọn format / kích thước.*
+![Enter the description](./images/canvas-02-prompt.png)
+*Figure 2: Description box + format/size pickers.*
 
-### Bước 3 — Chọn định dạng output
-- **PNG** (mặc định): ảnh chất lượng cao, hỗ trợ transparency.
-- **JPG**: ảnh nén nhẹ, không transparency.
-- **SVG**: vector, scale không vỡ — phù hợp icon/logo.
-- **DOCX**: tài liệu Word (mô tả khi đó nên là cấu trúc tài liệu, không phải hình).
+### Step 3 — Pick the output format
+- **PNG** (default): high-quality image with transparency support.
+- **JPG**: lighter compressed image, no transparency.
+- **SVG**: vector — scales without loss; great for icons/logos.
+- **DOCX**: a Word document (your description should describe the document structure, not an image).
 
-### Bước 4 — (Tuỳ chọn) chỉnh kích thước
-Mặc định 1200×1200. Tăng kích thước cho banner / poster.
+### Step 4 — (Optional) Adjust dimensions
+Default is 1200×1200. Increase for banners / posters.
 
-### Bước 5 — Bấm "Generate"
-- Với PNG/JPG: Opus sinh JSON spec → Pillow render. Mất ~15–30 giây.
-- Với SVG: LLM trả raw SVG code (nhanh hơn).
-- Với DOCX: LLM trả JSON spec → python-docx render.
+### Step 5 — Click "Generate"
+- For PNG/JPG: Opus produces a JSON spec → Pillow renders it. Takes ~15–30 seconds.
+- For SVG: the LLM returns raw SVG code (faster).
+- For DOCX: the LLM returns a JSON spec → python-docx renders it.
 
 ![Loading state](./images/canvas-03-generating.png)
-*Hình 3: Spinner trong khi generate.*
+*Figure 3: Spinner during generation.*
 
-### Bước 6 — Preview kết quả
-Hình hiển thị ở panel phải.
+### Step 6 — Preview the result
+The image appears in the right panel.
 
-![Preview kết quả](./images/canvas-04-preview.png)
-*Hình 4: Ảnh sinh ra hiển thị trực tiếp trên web.*
+![Result preview](./images/canvas-04-preview.png)
+*Figure 4: The generated image is shown directly in the web app.*
 
-### Bước 7 — Tải về hoặc Regenerate
-- Bấm **Download** → lưu file về máy.
-- Sửa mô tả → bấm Generate lại nếu chưa ưng.
+### Step 7 — Download or regenerate
+- Click **Download** → save the file to your machine.
+- Adjust the description → click Generate again if you're not satisfied.
 
 ---
 
-## 4. Kịch bản minh hoạ (User Journeys)
+## 4. Walkthroughs (User Journeys)
 
-### Kịch bản 1 — Tạo cover image cho slide
+### Journey 1 — Cover image for a slide
 
-**Bối cảnh:** Bạn cần ảnh cover cho deck `"AI Agent Platform 2026"`.
+**Context:** You need a cover image for the deck `"AI Agent Platform 2026"`.
 
-**Bước thực hiện:**
-1. Mở Canvas Designer.
-2. Mô tả: `"Cover image — abstract AI agents connected as a network, glowing blue nodes on dark background, cyberpunk aesthetic"`.
-3. Chọn format: **PNG**, kích thước 1920×1080 (16:9).
+**Steps:**
+1. Open the Canvas Designer.
+2. Describe: `"Cover image — abstract AI agents connected as a network, glowing blue nodes on dark background, cyberpunk aesthetic"`.
+3. Pick format: **PNG**, size 1920×1080 (16:9).
 4. Generate → preview.
-5. Chưa ưng → bổ sung: `"... add subtle red accent lines, more depth"` → regenerate.
-6. Download → chèn vào slide cover trong PowerPoint.
+5. Not happy → add: `"... add subtle red accent lines, more depth"` → regenerate.
+6. Download → insert into the deck's cover slide in PowerPoint.
 
-![Cover image kết quả](./images/canvas-scn1-cover.png)
-*Hình: Cover image kiểu network nodes với glow.*
-
----
-
-### Kịch bản 2 — Sinh icon SVG cho web app
-
-**Bối cảnh:** Bạn cần một icon `"shield with checkmark"` cho dashboard security.
-
-**Bước thực hiện:**
-1. Mô tả: `"Minimalist shield icon with a green checkmark, flat design, clean lines"`.
-2. Format: **SVG**, kích thước 256×256.
-3. Generate — LLM trả raw SVG code, web hiển thị render trước.
-4. Download `.svg` → nhúng vào codebase.
-
-**Cảnh báo:** SVG do LLM viết có thể không tối ưu (path phức tạp / chưa minify). Chạy qua SVGO nếu cần production-grade.
+![Cover image result](./images/canvas-scn1-cover.png)
+*Figure: Network-node cover image with glow.*
 
 ---
 
-### Kịch bản 3 — Sinh tài liệu DOCX có cấu trúc
+### Journey 2 — Generate an SVG icon for a web app
 
-**Bối cảnh:** Bạn cần một bản template `"Project Charter"` với cấu trúc chuẩn.
+**Context:** You need a `"shield with checkmark"` icon for a security dashboard.
 
-**Bước thực hiện:**
+**Steps:**
+1. Describe: `"Minimalist shield icon with a green checkmark, flat design, clean lines"`.
+2. Format: **SVG**, size 256×256.
+3. Generate — the LLM returns raw SVG code, the web app renders it.
+4. Download `.svg` → embed in your codebase.
+
+**Warning:** LLM-generated SVG may not be optimal (complex paths / unminified). Run it through SVGO for production-grade output.
+
+---
+
+### Journey 3 — Generate a structured DOCX document
+
+**Context:** You need a `"Project Charter"` template with a standard structure.
+
+**Steps:**
 1. Format: **DOCX**.
-2. Mô tả: `"Project Charter document with sections: Project Name, Objectives, Scope (in/out), Stakeholders table, Milestones timeline, Risks & Mitigations, Approval signatures"`.
-3. Generate → LLM trả JSON spec → python-docx render.
-4. Download `.docx` → mở Word, điền nội dung thực tế.
+2. Describe: `"Project Charter document with sections: Project Name, Objectives, Scope (in/out), Stakeholders table, Milestones timeline, Risks & Mitigations, Approval signatures"`.
+3. Generate → the LLM returns a JSON spec → python-docx renders it.
+4. Download `.docx` → open in Word and fill in the real content.
 
 ---
 
-## 5. Tips sử dụng
+## 5. Usage tips
 
-- **Mô tả càng chi tiết, kết quả càng đúng ý**: nêu rõ style (`"flat design"`, `"cyberpunk"`, `"corporate minimalist"`), màu sắc (`"red and navy"`), bố cục (`"center composition"`).
-- **Tham khảo 5 palette built-in** để chọn tone:
+- **More detail in the description → better results**: state the style (`"flat design"`, `"cyberpunk"`, `"corporate minimalist"`), the colors (`"red and navy"`), and the composition (`"centered composition"`).
+- **Use the 5 built-in palettes to pick a tone**:
   - `synthetic_optimism` (cyan/pink/dark blue) — futuristic
   - `midnight_aurora` (blue/purple/navy) — premium
   - `forest_tech` (green/dark forest) — sustainability
   - `cosmic_dream` (pink/blue/black) — creative
   - `neon_noir` (neon green/magenta/black) — bold
-- **PNG > JPG** cho graphics có nền trong suốt; **JPG** chỉ khi cần dung lượng nhỏ.
-- **SVG** không phù hợp ảnh thực — chỉ tốt cho icon, logo, đồ hoạ hình học.
-- **DOCX** không phải `"viết bài cho tôi"` — chỉ tạo cấu trúc/format. Nội dung chi tiết bạn tự điền, hoặc dùng Powerpoint-er/Summarizer cho text.
-- **Tải về ngay** sau khi sinh — search file cũ chỉ tìm trong ngày hôm nay.
-- **Regenerate là sinh lại hoàn toàn** — không phải tinh chỉnh. Cần style khác nhẹ, sửa mô tả; cần style hoàn toàn mới, regenerate.
+- **PNG > JPG** for graphics that need transparency; pick **JPG** only if file size matters.
+- **SVG is not for photorealism** — only good for icons, logos, geometric graphics.
+- **DOCX is not "write the article for me"** — it only produces structure/formatting. Detailed content is up to you, or use the Powerpoint-er/Summarizer for text.
+- **Download right away** — older files may not be findable after the same day.
+- **Regenerate is full rebuild, not a tweak** — for a subtle style change, edit the description; for a completely different style, regenerate.
 
 ---
 
-## 6. Hạn chế đã biết
+## 6. Known limitations
 
-- **Không phải image generation kiểu DALL-E / Midjourney**: ảnh được render programmatic bằng Pillow theo spec JSON — phù hợp đồ hoạ trừu tượng, infographic, network diagram, KPI visual; **không** sinh được ảnh thực tế chân dung, phong cảnh, vật thể chi tiết.
-- **Limited palettes**: 5 palette built-in — chưa tuỳ biến màu hoàn toàn từ user prompt.
-- **SVG do LLM viết** có thể không tối ưu — không production-ready nếu không qua SVGO.
-- **Download chỉ tìm file của ngày hôm nay** — file ngày trước có thể không truy lại được qua giao diện.
-- **Không có version history**: regenerate ghi đè preview — chưa lưu các phiên bản trước.
-- **Không có batch / mass generation**: mỗi lần 1 file.
-- **DOCX không có header/footer / page number tuỳ biến**: chỉ sinh body content theo spec.
-- **Không có brand template DOCX chính thức**: cần copy-paste vào template công ty sau khi tải.
+- **Not a DALL-E / Midjourney-style image generator**: images are rendered programmatically via Pillow from a JSON spec — great for abstract graphics, infographics, network diagrams, KPI visuals; **not** for realistic portraits, landscapes, or detailed real-world objects.
+- **Limited palettes**: 5 built-in palettes — no fully custom color tuning from the user prompt yet.
+- **LLM-written SVG** may be sub-optimal — not production-ready without SVGO.
+- **Download only finds today's files** — older files may not be retrievable through the UI.
+- **No version history**: regenerating overwrites the preview — earlier versions are not saved.
+- **No batch / mass generation**: one file at a time.
+- **No custom DOCX header/footer / page numbering**: only body content per the spec.
+- **No official branded DOCX template**: copy-paste into the corporate template after downloading.

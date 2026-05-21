@@ -1,134 +1,134 @@
-# The Summarizer — Tóm tắt tài liệu
+# The Summarizer — Document summarization
 
-> Nén báo cáo dài, biên bản họp, hợp đồng thành 3–5 câu executive summary + 5–8 key insight có thể hành động.
+> Condense long reports, meeting notes, and contracts into a 3–5 sentence executive summary plus 5–8 actionable key insights.
 
 ---
 
-## 1. Giới thiệu khả năng
+## 1. Capabilities overview
 
-**The Summarizer làm gì?** Nhận một hoặc nhiều tài liệu, đọc toàn bộ và trả về:
-- Một đoạn tóm tắt cấp lãnh đạo (3–5 câu).
-- Danh sách 5–8 ý chính dạng bullet (ưu tiên: quyết định, số liệu, deadline, rủi ro).
+**What does The Summarizer do?** It accepts one or more documents, reads them in full, and returns:
+- An executive-level summary (3–5 sentences).
+- A list of 5–8 key bullet points (prioritizing decisions, numbers, deadlines, risks).
 
-**Khi nào dùng?**
-- Bạn cần "nắm gọn" trong 2 phút trước cuộc họp.
-- Bạn có nhiều file cùng chủ đề và muốn một bản tổng hợp duy nhất.
-- Bạn muốn rút ý chính từ biên bản họp / báo cáo / nghiên cứu thị trường.
+**When to use it**
+- You need to "get up to speed" in 2 minutes before a meeting.
+- You have several files on the same topic and want one consolidated summary.
+- You want to extract the main points from meeting minutes / reports / market research.
 
 **Input**
-- 1 hoặc nhiều file: PDF, DOCX, PPTX, TXT.
+- 1 or more files: PDF, DOCX, PPTX, TXT.
 
 **Output**
-- `summary`: đoạn văn 3–5 câu.
-- `key_points`: 5–8 bullet ý chính.
-- `truncated`: cờ báo nếu nội dung gốc bị cắt do quá dài.
+- `summary`: a 3–5 sentence paragraph.
+- `key_points`: 5–8 bullet points.
+- `truncated`: a flag indicating that the source content was cut because it was too long.
 
 ---
 
-## 2. Giới hạn & điều kiện sử dụng
+## 2. Limits & prerequisites
 
-| Mục | Giới hạn |
+| Item | Limit |
 | --- | --- |
-| Định dạng | PDF, DOCX, PPTX, TXT |
-| Kích thước mỗi file | Tối đa **20 MB** |
-| Tổng văn bản đầu vào | **100.000 ký tự** — vượt sẽ bị cắt và đánh dấu `truncated: true` |
-| Số file cùng lúc | Không giới hạn cứng, nhưng tổng phải nằm trong 100K ký tự |
-| Đăng nhập | SSO bắt buộc |
+| Formats | PDF, DOCX, PPTX, TXT |
+| Size per file | Up to **20 MB** |
+| Total input text | **100,000 characters** — anything beyond is cut and flagged as `truncated: true` |
+| Files at once | No hard cap, but the combined text must fit within 100K characters |
+| Authentication | SSO required |
 
 ---
 
-## 3. Cách sử dụng (Step-by-step)
+## 3. How to use (step-by-step)
 
-### Bước 1 — Mở The Summarizer
-Vào tab **The Summarizer**.
+### Step 1 — Open The Summarizer
+Go to the **The Summarizer** tab.
 
-![Giao diện Summarizer](./images/summarizer-01-home.png)
-*Hình 1: Vùng upload bên trái, kết quả bên phải.*
+![Summarizer interface](./images/summarizer-01-home.png)
+*Figure 1: Upload zone on the left, results on the right.*
 
-### Bước 2 — Upload một hoặc nhiều file
-Kéo-thả nhiều file cùng lúc, hoặc bấm chọn nhiều lần.
+### Step 2 — Upload one or more files
+Drag and drop multiple files at once, or click to add files one by one.
 
-![Upload nhiều file](./images/summarizer-02-multi-upload.png)
-*Hình 2: Danh sách file đã thêm — có thể xoá từng file trước khi tóm tắt.*
+![Multi-file upload](./images/summarizer-02-multi-upload.png)
+*Figure 2: The list of added files — each one can be removed before summarizing.*
 
-### Bước 3 — Bấm "Summarize"
-Agent đọc tất cả file, ghép nội dung, gửi tới LLM.
+### Step 3 — Click "Summarize"
+The agent reads all the files, concatenates the content, and sends it to the LLM.
 
-### Bước 4 — Đợi kết quả
-Khoảng 10–30 giây tuỳ tổng kích thước.
+### Step 4 — Wait for the result
+Roughly 10–30 seconds depending on total size.
 
-### Bước 5 — Xem kết quả
-- **Executive Summary** ở trên: 3–5 câu.
-- **Key Insights** ở dưới: 5–8 bullet.
+### Step 5 — Review the result
+- **Executive Summary** at the top: 3–5 sentences.
+- **Key Insights** below: 5–8 bullets.
 
-![Kết quả tóm tắt](./images/summarizer-03-result.png)
-*Hình 3: Kết quả tóm tắt + bullet ý chính.*
+![Summary result](./images/summarizer-03-result.png)
+*Figure 3: Executive summary + key bullet points.*
 
-### Bước 6 — Copy hoặc thêm file
-- Bấm Copy để dán vào email/chat.
-- Hoặc thêm file mới → bấm Summarize lại để có bản tổng hợp mở rộng.
-
----
-
-## 4. Kịch bản minh hoạ (User Journeys)
-
-### Kịch bản 1 — Tóm tắt biên bản họp dài 30 trang
-
-**Bối cảnh:** `Board_Meeting_May.docx` 30 trang. Cần gửi tóm tắt cho team không tham dự.
-
-**Bước thực hiện:**
-1. Mở Summarizer → kéo `Board_Meeting_May.docx`.
-2. Bấm Summarize → đợi ~15 giây.
-3. Nhận:
-   - **Summary:** *"Cuộc họp tập trung vào ngân sách Q3, quyết định hoãn dự án X đến Q4, và phê duyệt tuyển 5 vị trí mới cho team Data…"*
-   - **Key insights:** 7 bullet — mỗi cái có số liệu cụ thể, người chịu trách nhiệm, deadline.
-4. Copy → dán vào email cho team.
-
-![Tóm tắt biên bản](./images/summarizer-scn1-meeting.png)
-*Hình: Kết quả có executive summary + bullet ưu tiên quyết định và deadline.*
+### Step 6 — Copy or add more files
+- Click Copy to paste into email/chat.
+- Or add a new file → click Summarize again for an expanded combined summary.
 
 ---
 
-### Kịch bản 2 — Tổng hợp nhiều báo cáo thành 1 bản tóm tắt duy nhất
+## 4. Walkthroughs (User Journeys)
 
-**Bối cảnh:** Bạn có 4 báo cáo nghiên cứu thị trường từ 4 hãng khác nhau, muốn ý chính tổng hợp.
+### Journey 1 — Summarize a 30-page meeting minute
 
-**Bước thực hiện:**
-1. Upload cả 4 file: `Gartner.pdf`, `Forrester.pdf`, `IDC.pdf`, `McKinsey.docx`.
-2. Bấm Summarize.
-3. Agent ghép tất cả (nối nhau bằng separator `--- filename ---`) và tóm tắt thống nhất.
-4. Kết quả: 1 executive summary so sánh quan điểm 4 hãng, 8 bullet so sánh điểm chung và khác biệt.
+**Context:** `Board_Meeting_May.docx` is 30 pages long. You need to send a recap to teammates who didn't attend.
 
-**Lưu ý:** Tổng 4 file gần 120K ký tự → agent báo `truncated: true`. Phần cuối file `McKinsey.docx` có thể không được tóm tắt — xem tip phần 5.
+**Steps:**
+1. Open the Summarizer → drag in `Board_Meeting_May.docx`.
+2. Click Summarize → wait ~15 seconds.
+3. You receive:
+   - **Summary:** *"The meeting focused on the Q3 budget, the decision to postpone project X to Q4, and approval for hiring 5 new positions for the Data team…"*
+   - **Key insights:** 7 bullets — each with specific numbers, owners, and deadlines.
+4. Copy → paste into an email to the team.
+
+![Meeting minutes summary](./images/summarizer-scn1-meeting.png)
+*Figure: Result with an executive summary and bullets prioritizing decisions and deadlines.*
 
 ---
 
-### Kịch bản 3 — Tóm tắt slide bán hàng đối tác
+### Journey 2 — Consolidate multiple reports into one summary
 
-**Bối cảnh:** `Partner_Deck.pptx` 40 slide, bạn cần biết partner đó đang đề xuất gì trước khi vào họp.
+**Context:** You have 4 market research reports from 4 different firms and want a consolidated set of key takeaways.
 
-**Bước thực hiện:**
-1. Upload PPTX.
+**Steps:**
+1. Upload all 4 files: `Gartner.pdf`, `Forrester.pdf`, `IDC.pdf`, `McKinsey.docx`.
+2. Click Summarize.
+3. The agent concatenates them (joined by a `--- filename ---` separator) and produces a unified summary.
+4. Result: a single executive summary comparing the four firms' views, and 8 bullets contrasting agreements and disagreements.
+
+**Note:** Combined, the 4 files are close to 120K characters → the agent flags `truncated: true`. The tail of `McKinsey.docx` may not be summarized — see the tip in section 5.
+
+---
+
+### Journey 3 — Summarize a partner sales deck
+
+**Context:** `Partner_Deck.pptx` has 40 slides and you want to know the partner's pitch before the meeting.
+
+**Steps:**
+1. Upload the PPTX.
 2. Summarize.
-3. Nhận: 5 câu tóm tắt giải pháp đối tác đề xuất + bullet về pricing, timeline, risks.
+3. You get: 5 sentences summarizing the partner's proposed solution + bullets on pricing, timeline, and risks.
 
 ---
 
-## 5. Tips sử dụng
+## 5. Usage tips
 
-- **Hỏi cụ thể bằng cách thêm context file**: nếu bạn upload kèm 1 file `prompt.txt` ghi `"Focus on financial risks and Q4 deadlines"`, agent sẽ ưu tiên các phần đó.
-- **Tránh tổng quá 100K ký tự**: nếu nhiều file lớn, ưu tiên loại bỏ phụ lục / annexes trước khi upload.
-- **Báo `truncated: true`** = nội dung bị cắt — chia nhỏ và tóm tắt từng phần, rồi tổng hợp lại bằng cách upload các bản tóm tắt vừa rồi.
-- **Kết quả không "sáng tạo nội dung mới"** — nếu kết quả thiếu một điểm bạn nhớ, có thể điểm đó nằm ở phần đã bị truncate.
-- **Tóm tắt biên bản họp** sẽ trả về tốt nếu file có cấu trúc rõ (tiêu đề, người phát biểu, action items).
+- **Direct the focus by adding a context file**: if you upload a `prompt.txt` containing `"Focus on financial risks and Q4 deadlines"`, the agent will prioritize those areas.
+- **Avoid going over 100K characters**: if many files are large, drop appendices/annexes before uploading.
+- **`truncated: true`** = content was cut — break it down and summarize in parts, then upload those partial summaries for a final consolidated pass.
+- **The agent does not "invent" content** — if a point you remember is missing, it may live in the truncated section.
+- **Meeting minute summaries** come out well if the file has clear structure (titles, speakers, action items).
 
 ---
 
-## 6. Hạn chế đã biết
+## 6. Known limitations
 
-- **Cắt cứng ở 100.000 ký tự** tổng — không có cách nâng giới hạn từ giao diện.
-- **Không sinh file** — kết quả chỉ là text trên web; phải copy thủ công.
-- **Không lưu lịch sử** — đóng tab là mất kết quả; lưu trước khi rời trang.
-- **Không phân biệt nguồn**: nếu upload nhiều file, summary không nói rõ insight nào từ file nào (trừ khi key point bạn yêu cầu rõ điều đó).
-- **Không có chế độ "summary theo độ dài"** — luôn là 3–5 câu + 5–8 bullet. Cần ngắn hơn/dài hơn → tự rút gọn hoặc dùng Brainstormer/Hub để mở rộng.
-- **Không xử lý ảnh trong tài liệu** — biểu đồ/đồ thị bị bỏ qua, chỉ đọc text.
+- **Hard cap at 100,000 characters** combined — there is no UI control to raise it.
+- **No file output** — the result is web-only text; you must copy it manually.
+- **No history is saved** — closing the tab loses the result; save it before leaving.
+- **No source attribution**: when multiple files are uploaded, the summary does not say which insight came from which file (unless you explicitly ask).
+- **No "summary length" mode** — it's always 3–5 sentences + 5–8 bullets. For shorter/longer, edit manually or use Brainstormer/Hub to expand.
+- **Images in documents are not processed** — charts/diagrams are ignored; only text is read.
