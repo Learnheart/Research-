@@ -1,4 +1,4 @@
-# Tài studio architecture
+# Agent Studio architecture
 
 ---
 
@@ -8,7 +8,7 @@
 
 #### System Purpose
 
-TÀI Studio is a super app platform that bundles 10 specialized AI agents on Databricks Apps. Each agent solves a specific workplace task — translation, summarization, presentation generation, knowledge management, brainstorming, AI vision analysis, visual design, and resume evaluation. A unified orchestrator agent (TÀI) can invoke any specialist via LangGraph tool calling.
+Agent Studio is a super app platform that bundles 10 specialized AI agents on Databricks Apps. Each agent solves a specific workplace task — translation, summarization, presentation generation, knowledge management, brainstorming, AI vision analysis, visual design, and resume evaluation. A unified orchestrator agent (Hub) can invoke any specialist via LangGraph tool calling.
 
 #### How Agents Interact
 
@@ -16,12 +16,12 @@ TÀI Studio is a super app platform that bundles 10 specialized AI agents on Dat
 
 Each specialist agent operates independently as a standalone Databricks App (FastAPI + React). Users access them via iframe in the hub or directly via their own URL. No inter-agent communication occurs.
 
-**Pattern 2 — Orchestrator (TÀI Super Agent)**
+**Pattern 2 — Orchestrator (Hub Agent)**
 
-The TÀI agent acts as a centralized orchestrator using a LangGraph ReAct pattern with 8 tools. Each tool wraps an HTTP call to a specialist agent's API. The LLM decides which agent to invoke based on conversation context. Auth uses the app's service principal token.
+The Hub agent acts as a centralized orchestrator using a LangGraph ReAct pattern with 8 tools. Each tool wraps an HTTP call to a specialist agent's API. The LLM decides which agent to invoke based on conversation context. Auth uses the app's service principal token.
 
 ```
-User → TÀI Chat → LangGraph ReAct Agent
+User → Hub Chat → LangGraph ReAct Agent
                           │
         ┌─────────────────┼─────────────────┐
         ▼                 ▼                 ▼
@@ -33,14 +33,14 @@ User → TÀI Chat → LangGraph ReAct Agent
 
 **Pattern 3 — Human-in-the-Loop (Interrupt/Resume)**
 
-When TÀI needs a file from the user, it uses LangGraph's `interrupt()` to pause the graph, renders a file upload UI in the frontend, then resumes after receiving the file path.
+When Hub needs a file from the user, it uses LangGraph's `interrupt()` to pause the graph, renders a file upload UI in the frontend, then resumes after receiving the file path.
 
 #### Control Flow Model
 
-- Centralized orchestration via TÀI (LangGraph ReAct loop)
+- Centralized orchestration via Hub (LangGraph ReAct loop)
 - Request-response for standalone agent access (REST API)
 - SSE streaming for long-running tasks (Translator)
-- Checkpoint-based state for multi-turn conversations (Brainstormer, TÀI)
+- Checkpoint-based state for multi-turn conversations (Brainstormer, Hub)
 
 #### Data Flow
 
@@ -60,7 +60,7 @@ When TÀI needs a file from the user, it uses LangGraph's `interrupt()` to pause
 | Backend Framework | FastAPI | Each agent is a standalone FastAPI app |
 | Frontend Framework | React + Vite + Tailwind CSS | SPA served by FastAPI static files |
 | AI/LLM | Claude Opus 4.5, Sonnet 4.5, Haiku 4.5 | Via Databricks Foundation Model API (ChatDatabricks) |
-| Agent Framework | LangGraph + LangChain | StateGraph (Brainstormer), ReAct with ToolNode (TÀI) |
+| Agent Framework | LangGraph + LangChain | StateGraph (Brainstormer), ReAct with ToolNode (Hub) |
 | File Storage | Unity Catalog Volumes | Hierarchical: `/{agent}/{user}/{date}/{uuid}.{ext}` |
 | State Storage | Lakebase (PostgreSQL) | Chat checkpoints, session index, user preferences, vault graph |
 | Document Parsing | `ai_parse_document` (Databricks SQL) | For PDF/DOCX; PPTX parsed locally via python-pptx |
@@ -87,7 +87,7 @@ When TÀI needs a file from the user, it uses LangGraph's `interrupt()` to pause
 - **Structured JSON output:** All agents instruct the LLM to return raw JSON only (no markdown fences)
 - **System + Human message pattern:** SystemMessage with detailed instructions, HumanMessage with content
 - **Canvas delimiter:** Brainstormer uses `---CANVAS---` delimiter to separate conversational reply from structured canvas data
-- **UI delimiter:** TÀI uses `---UI---` delimiter to embed frontend component instructions
+- **UI delimiter:** Hub uses `---UI---` delimiter to embed frontend component instructions
 
 ---
 
@@ -124,12 +124,12 @@ When TÀI needs a file from the user, it uses LangGraph's `interrupt()` to pause
 
 | Caller → | Translator | Summarizer | PPTX-er | Vaulter | Brainstormer | Visionary | Canvas | Resume |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **TÀI** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✗ | ✗ |
+| **Hub** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✗ | ✗ |
 | **Hub (iframe)** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **Visionary** | ✗ | ✗ | ✗ | ✗ | ✗ | ✗ (proxies to KA endpoint) | ✗ | ✗ |
 
-- TÀI does not yet have tools for Canvas Designer or Resume Evaluator (newly added agents)
-- No agent calls another agent directly — only TÀI orchestrates
+- Hub does not yet have tools for Canvas Designer or Resume Evaluator (newly added agents)
+- No agent calls another agent directly — only Hub orchestrates
 - The Hub embeds all agents via iframe (no API calls, just URL embedding)
 
 ---
@@ -144,8 +144,8 @@ When TÀI needs a file from the user, it uses LangGraph's `interrupt()` to pause
 | `file_parser.py` | Document parsing via `ai_parse_document` (SQL) or local python-pptx | Translator, Summarizer, Vaulter, Resume |
 | `file_validator.py` | Upload validation: extension, size (≤20MB), magic bytes | All file-accepting agents |
 | `user_context.py` | Extract user email from X-Forwarded-Email header | All agents |
-| `user_preferences.py` | Lakebase-backed cross-session preferences (language, tone, topics) | Brainstormer, TÀI |
-| `compact_messages.py` | Summarize-then-trim message compaction to prevent context overflow | Brainstormer, TÀI, Visionary |
+| `user_preferences.py` | Lakebase-backed cross-session preferences (language, tone, topics) | Brainstormer, Hub |
+| `compact_messages.py` | Summarize-then-trim message compaction to prevent context overflow | Brainstormer, Hub, Visionary |
 | `chat_store.py` | Lakebase-backed conversation storage with compaction on load | Available but not directly used (agents use LangGraph checkpoints) |
 | `upload_router.py` | Shared FastAPI router for `/api/files/upload` and `/api/files/resolve` | All file-accepting agents |
 | `schemas.py` | Shared Pydantic models (TranslateRequest/Response, SummarizeRequest/Response, etc.) | Translator, Summarizer, Vaulter, PPTX-er |
@@ -160,7 +160,7 @@ When TÀI needs a file from the user, it uses LangGraph's `interrupt()` to pause
 | No retry on LLM calls | Medium | Most agents do not retry failed LLM calls (except Translator which retries 2x for structured translation). A transient LLM error fails the entire request |
 | Synchronous file parsing | Medium | `ai_parse_document` uses a SQL Warehouse connection. Long-running queries block the FastAPI thread (mitigated by `asyncio.to_thread` in some agents) |
 | No rate limiting | Medium | No request rate limiting on any agent API. A single user could exhaust LLM quota |
-| Shared Lakebase schema | Medium | All agents use `tai_studio` schema in Lakebase. Schema migrations are manual (`init_db()` with `CREATE TABLE IF NOT EXISTS`) |
+| Shared Lakebase schema | Medium | All agents use `agent_studio` schema in Lakebase. Schema migrations are manual (`init_db()` with `CREATE TABLE IF NOT EXISTS`) |
 | Canvas Designer pixel-level rendering | Low | `generate_artistic_image` iterates pixel-by-pixel for gradients/glows. Large images (>2000px) will be slow |
 | Translator parallel workers | Low | `_MAX_PARALLEL = 5` concurrent LLM calls per translation. Large PPTX files with many slides may still be slow |
 
@@ -172,7 +172,7 @@ When TÀI needs a file from the user, it uses LangGraph's `interrupt()` to pause
 | --- | --- |
 | SQL injection in `file_parser.py` | Volume path is interpolated into SQL string. Mitigated by strict regex validation (`[A-Za-z0-9/_.-@]+`) but not parameterized |
 | No authentication on standalone agents | Agents rely on Databricks Apps proxy for auth (X-Forwarded-Email). If accessed directly (bypassing proxy), no auth is enforced |
-| Service Principal token exposure | TÀI's `_token()` function extracts SP token from WorkspaceClient. Token is passed in HTTP headers to agent APIs — standard pattern but sensitive |
+| Service Principal token exposure | Hub's `_token()` function extracts SP token from WorkspaceClient. Token is passed in HTTP headers to agent APIs — standard pattern but sensitive |
 | CORS allows localhost | All agents allow `http://localhost:5173` in CORS origins. Should be removed in production |
 | No input sanitization on LLM prompts | User messages are passed directly to LLM system prompts. Prompt injection is possible (mitigated by LLM's own guardrails) |
 | File upload size limit only | 20MB limit enforced, but no virus scanning or content inspection beyond magic bytes |
@@ -211,15 +211,15 @@ When TÀI needs a file from the user, it uses LangGraph's `interrupt()` to pause
 
 ### Scalability Enhancements
 
-- **Add TÀI tools for new agents** — Canvas Designer and Resume Evaluator are not yet accessible via TÀI
+- **Add Hub tools for new agents** — Canvas Designer and Resume Evaluator are not yet accessible via Hub
 - **Implement request queuing** — for batch operations (Resume Evaluator batch, large translations), use background workers
 - **LLM endpoint failover** — configure fallback endpoints if primary is throttled
 - **Horizontal scaling** — each agent is independently deployable, but currently single-instance. Add load balancing for high-traffic agents
 
 ### AI/Agent Design Improvements
 
-- **Streaming responses** — TÀI and Brainstormer should stream LLM responses token-by-token for better UX
+- **Streaming responses** — Hub and Brainstormer should stream LLM responses token-by-token for better UX
 - **RAG for Vaulter** — current implementation loads all documents as context. Should use vector embeddings + similarity search for scalable retrieval
 - **Structured output** — use LangChain's `with_structured_output()` instead of JSON-in-prompt for more reliable parsing
-- **Tool result caching** — TÀI could cache tool results within a session to avoid redundant agent calls
-- **Multi-modal TÀI** — extend TÀI to handle image inputs directly (for Canvas Designer and Visionary integration)
+- **Tool result caching** — Hub could cache tool results within a session to avoid redundant agent calls
+- **Multi-modal Hub** — extend Hub to handle image inputs directly (for Canvas Designer and Visionary integration)

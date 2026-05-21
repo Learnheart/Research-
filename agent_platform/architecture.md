@@ -3,7 +3,7 @@
 ## Table of Contents
 
 1. **Introduction**
-2. **Motivation (WHY)** *(@Tam IT. Nguyen Thi Thanh)*
+2. **Motivation (WHY)**
    - 2.1. Business Pain Points
    - 2.2. Required Technology Capabilities (WHY do we need AI Agents?)
    - 2.3. Approach to build AI Agents (WHY do we need a Platform?)
@@ -13,15 +13,15 @@
    - 3.3. Benefits
 4. **Proposed Solution (TO-BE) (HOW)**
    - 4.1. Current Technology Capabilities
-   - 4.2. Targeted Technology Capabilities *(@Tam IT. Nguyen Thi Thanh)*
+   - 4.2. Targeted Technology Capabilities
      - 4.2.1. Guiding Principles
      - 4.2.2. Targeted Technology Capabilities
      - 4.2.3. To-be Maturity level of Autonomy in AI Agents
-   - 4.3. IT Architecture Components *(@Hai IT. Nguyen Ngoc)*
-   - 4.4. Solution options analysis *(@Hai IT. Nguyen Ngoc)*
-   - 4.5. Tech Stack and License *(@Hai IT. Nguyen Ngoc)*
-   - 4.6. Target Architecture *(@Hai IT. Nguyen Ngoc)*
-   - 4.7. Security Considerations *(@Phuc IT. Le Thanh)*
+   - 4.3. IT Architecture Components
+   - 4.4. Solution options analysis
+   - 4.5. Tech Stack and License
+   - 4.6. Target Architecture
+   - 4.7. Security Considerations
      - 4.7.1 Data and AI Security
      - 4.7.2. System security
      - 4.7.2. Compliance
@@ -37,14 +37,14 @@
 
 ## 1. Introduction
 
-In this DAB0, we are seeking approval for the adoption of an Agentic AI Platform to transform banking operations by enhancing customer engagement, streamlining workflows, and driving growth, with this scope of endorsement.
+In this document, we are seeking approval for the adoption of an Agentic AI Platform to transform banking operations by enhancing customer engagement, streamlining workflows, and driving growth, with this scope of endorsement.
 
 ### In-scope
 
 - Address the need for an Agentic AI Platform that fulfill the approached use cases, while having the capabilities of no-code/low-code agent, UI, Workflow building to democratize Agentic AI access even for non-technicals.
-- Adopt exploration approach using open-source technologies for the first iteration of Agentic AI Platform in TCB to save cost, remain flexible to extend, and have option to upgrade to Enterprise version when needed, while later architecture improvements can be refined and updated in DAB.
+- Adopt exploration approach using open-source technologies for the first iteration of Agentic AI Platform in the bank to save cost, remain flexible to extend, and have option to upgrade to Enterprise version when needed, while later architecture improvements can be refined and updated in subsequent documents.
 - Adopt Agentic AI for 3 high potential use cases (Refer to *5.1. Use cases and Functional Requirements* for more details)
-- Resolve road-blockers to enable TCB's AI/ Agentic AI Adoption: Implement Model selection, Data Protection, Data Poisoning Prevention, Data Loss Prevention, Model Guardrails, prompt validation, prompt logging and audit. (Which is scope of Project IT-B59: Intelligent Multi-model Hub)
+- Resolve road-blockers to enable the bank's AI/ Agentic AI Adoption: Implement Model selection, Data Protection, Data Poisoning Prevention, Data Loss Prevention, Model Guardrails, prompt validation, prompt logging and audit. (Which is scope of the AI Gateway project)
 
 ### Out of the scope
 
@@ -52,17 +52,17 @@ In this DAB0, we are seeking approval for the adoption of an Agentic AI Platform
 - Alignment with OPS for specific use cases
 - AI Agents with a high-level of autonomy (Refer to *4.2.3. To-be Maturity level of Autonomy in AI Agents* for more details)
 - Agentic AI Operating model
-- Approval from Timo and DAB Council
+- Approval from the steering committee
 
 ---
 
-## 2. Motivation (WHY) *(@Tam IT. Nguyen Thi Thanh)*
+## 2. Motivation (WHY)
 
 ### 2.1. Business Pain Points
 
 | # | Business Pain Points | Examples |
 | --- | --- | --- |
-| 1 | **Inefficient Human Dependency, reducing productivity and scalability** | Repetitive manual tasks with Inefficient Human Dependency prevent TCB staff from focusing on high-value activities (e.g., customer engagement) and reduce scalability:<br>• RMs manually generate call summaries and update CRM with customer interactions, spending hours daily.<br>• BAs manually generate BRDs and user stories, consuming 50-60% of their time |
+| 1 | **Inefficient Human Dependency, reducing productivity and scalability** | Repetitive manual tasks with Inefficient Human Dependency prevent staff from focusing on high-value activities (e.g., customer engagement) and reduce scalability:<br>• RMs manually generate call summaries and update CRM with customer interactions, spending hours daily.<br>• BAs manually generate BRDs and user stories, consuming 50-60% of their time |
 | 2 | **Poor Customer Understanding** | • Frequent staff turnover (4-5 changes per year) disrupts customer engagement continuity<br>• Generic product offers miss tailored opportunities based on customer preferences or behavior. |
 | 3 | **Inconsistent Quality** | • Frequent staff turnover (4-5 changes per year) disrupts customer engagement continuity<br>• Output quality depends on the skill levels and knowledge of RMs and BAs. |
 | 4 | **Delayed Follow-Ups and Communication** | Customer data or emails are manually entered, leading to delays. Slow follow-ups frustrate customers, especially priority clients. |
@@ -72,10 +72,10 @@ In this DAB0, we are seeking approval for the adoption of an Agentic AI Platform
 
 | # | Business Pain Points | Required Technology Capabilities | Potential Solution (Illustrative) — Option 1 (AI Agents) | Potential Solution (Illustrative) — Option 2 (Others) |
 | --- | --- | --- | --- | --- |
-| 1 | **Inefficient Human Dependency, reducing productivity and scalability** | • Handle processes with more automation and less human intervention<br>• Context-dependent process: able to adjust workflows dynamically (define when and what to create/update in CRM)<br>• Integrate with TCB's enterprise application (i.e. to create/update leads) | • AI Agents with multi-step reasoning, leveraging Retrieval-Augmented Generation (RAG) from TCB's knowledge base, and executing tasks using LLMs for context-dependent workflows<br>• Integrate with TCB's enterprise applications (e.g., CRM systems like Salesforce for creating/updating leads) | • BPM Platforms: Configure predefined workflows, but limited for dynamic, context-dependent processes.<br>• RPA: Automates CRM updates and lead creation in TCB's systems via APIs (e.g., Salesforce), reducing manual effort. |
-| 2 | **Poor Customer Understanding** | • Able to retrieve standardized and reusable knowledge bases (i.e. Customer knowledge base)<br>• Context-aware responses result in personalized engagement, increasing conversion rates and satisfaction | • AI Agents to access data across TCB RAG Knowledge Base and execute tasks using LLMs, handling context-dependent workflow<br>• Support popular AI Agent Patterns (i.e. Context-aware Adjusting) | • Data Lake with Analytics: Aggregates customer data for real-time insights.<br>• ML Models: Deliver tailored product offers |
-| 3 | **Inconsistent Quality** | • Able to retrieve standardized and reusable knowledge bases (i.e. Customer's interactions, Products knowledge base).<br>• Provide recommendations (i.e. Engagement scripts, BRD) with consistent quality | • AI Agents to access data across TCB RAG Knowledge Base<br>• Other standardized AI Agents for specific tasks (i.e. Provide personalized recommendations) | • Data Lake with Analytics: Aggregates customer interactions for insights via tools like Power BI.<br>• Knowledge Hub/ Knowledge Management system: Provides standardized product knowledge.<br>• ML Models/Gen AI: Delivers consistent engagement scripts and BRDs |
-| 4 | **Delayed Follow-Ups and Communication** | • Support faster decision-making and follow-up actions with less human intervention | • AI Agents for Autonomous Decision-Making (i.e. Action identification)<br>• Integrate with TCB's enterprise application (i.e. to create/update leads) | • ML: Identifies actions<br>• RPA: Automates CRM updates and lead creation in TCB's systems via APIs (e.g., Salesforce), reducing manual effort. |
+| 1 | **Inefficient Human Dependency, reducing productivity and scalability** | • Handle processes with more automation and less human intervention<br>• Context-dependent process: able to adjust workflows dynamically (define when and what to create/update in CRM)<br>• Integrate with enterprise applications (i.e. to create/update leads) | • AI Agents with multi-step reasoning, leveraging Retrieval-Augmented Generation (RAG) from the bank knowledge base, and executing tasks using LLMs for context-dependent workflows<br>• Integrate with enterprise applications (e.g., CRM systems like Salesforce for creating/updating leads) | • BPM Platforms: Configure predefined workflows, but limited for dynamic, context-dependent processes.<br>• RPA: Automates CRM updates and lead creation in the bank's systems via APIs (e.g., Salesforce), reducing manual effort. |
+| 2 | **Poor Customer Understanding** | • Able to retrieve standardized and reusable knowledge bases (i.e. Customer knowledge base)<br>• Context-aware responses result in personalized engagement, increasing conversion rates and satisfaction | • AI Agents to access data across corporate RAG knowledge base and execute tasks using LLMs, handling context-dependent workflow<br>• Support popular AI Agent Patterns (i.e. Context-aware Adjusting) | • Data Lake with Analytics: Aggregates customer data for real-time insights.<br>• ML Models: Deliver tailored product offers |
+| 3 | **Inconsistent Quality** | • Able to retrieve standardized and reusable knowledge bases (i.e. Customer's interactions, Products knowledge base).<br>• Provide recommendations (i.e. Engagement scripts, BRD) with consistent quality | • AI Agents to access data across corporate RAG knowledge base<br>• Other standardized AI Agents for specific tasks (i.e. Provide personalized recommendations) | • Data Lake with Analytics: Aggregates customer interactions for insights via tools like Power BI.<br>• Knowledge Hub/ Knowledge Management system: Provides standardized product knowledge.<br>• ML Models/Gen AI: Delivers consistent engagement scripts and BRDs |
+| 4 | **Delayed Follow-Ups and Communication** | • Support faster decision-making and follow-up actions with less human intervention | • AI Agents for Autonomous Decision-Making (i.e. Action identification)<br>• Integrate with enterprise applications (i.e. to create/update leads) | • ML: Identifies actions<br>• RPA: Automates CRM updates and lead creation in the bank's systems via APIs (e.g., Salesforce), reducing manual effort. |
 | 5 | **High Operational Costs** | • The root causes of High Operational Costs include the business pain points listed above, and thus the Required Technology Capabilities have already been covered above. | • The solutions have already been covered above. | • The solutions have already been covered above. |
 
 **High-level Assessment**
@@ -85,7 +85,7 @@ In this DAB0, we are seeking approval for the adoption of an Agentic AI Platform
 | **AI Agents** | Work well with dynamic, context-dependent processes requiring less human intervention (autonomous decision-making) or multi-step reasoning. | Might trade latency and cost for better task performance. Should consider when this tradeoff makes sense. |
 | **Others (BPM, RPA, ML)** | Works well with deterministic, rule-based tasks with predefined steps. They excel in structured environments. | Struggles with dynamic, context-dependent processes, or multi-step reasoning |
 
-> **Recommendation:** Adopt AI Agents to enable the opportunities of TCB in optimize client engagement and operations. AI Agents with multi-step reasoning, leveraging Retrieval-Augmented Generation (RAG) from TCB's knowledge base, and executing tasks using LLMs for context-dependent workflows.
+> **Recommendation:** Adopt AI Agents to enable the opportunities of the bank in optimize client engagement and operations. AI Agents with multi-step reasoning, leveraging Retrieval-Augmented Generation (RAG) from the bank knowledge base, and executing tasks using LLMs for context-dependent workflows.
 
 ### 2.3. Approach to build AI Agents (WHY do we need a Platform?)
 
@@ -98,13 +98,13 @@ In this DAB0, we are seeking approval for the adoption of an Agentic AI Platform
 
 ---
 
-## 3. New Capabilities enabled by Agentic AI Platform (WHAT) *(@Tam IT. Nguyen Thi Thanh)*
+## 3. New Capabilities enabled by Agentic AI Platform (WHAT)
 
 ### 3.1. About AI agents and Agentic AI Platform
 
 Agentic AI/AI Agents, a rapidly emerging trend in 2025, transforms work by managing end-to-end processes with minimal human intervention, evolving from narrow tools to team members, boosting enterprise productivity and growth:
 
-- Tech giants (Google, Microsoft, AWS, OpenAI) and startups are racing to deploy AI agent platforms *(Ref: CIO Speech, IT Townhall 19/7/2025)*.
+- Tech giants (Google, Microsoft, AWS, OpenAI) and startups are racing to deploy AI agent platforms .
 - Adoption is strong: **14%** of organizations have implemented AI agents (12% partial, 2% full), **23%** are piloting, and **61%** are exploring deployment *(Ref: Capgemini research)*.
 
 **What are AI Agents?**
@@ -125,7 +125,7 @@ Agentic AI/AI Agents, a rapidly emerging trend in 2025, transforms work by manag
 | **C02** | Standardized Agent-to-Agent, Agent-to-Service Collaboration | Enable each agent to collaborate with other agent and systems/tools using standardized protocols (i.e. A2A for Agent-to-Agent interactions, Model Context protocol - MCP for Agent-to-Service integrations) |
 | **C03** | Support popular AI Agent Patterns | (i.e. Reflection, Specific task handling, Hierarchical task delegation, Coordinating, Human-in-the-loop Collaboration, Context – Aware Adjusting, Self-Learning, RAG-Based Agent) |
 | **C04** | Context and Memory Management | Retain interaction history and context (e.g., LangChain's memory systems) for consistent, personalized responses. |
-| **C05** | No-Code/Low-Code Agent Builder with model selections | Access to both TCB's self-build models and 3rd party models |
+| **C05** | No-Code/Low-Code Agent Builder with model selections | Access to both self-built models and 3rd party models |
 | **C06** | Provide flexible and standardized Security Controls | To support flexibility in future development of Agentic AI Applications: Data Protection, Data Poisoning Prevention, Data Loss Prevention, model Guardrails, Prompt validation, logging and audit |
 
 ### 3.3. Benefits
@@ -136,12 +136,12 @@ Agentic AI/AI Agents, a rapidly emerging trend in 2025, transforms work by manag
 - **Provide recommendations** (i.e. Engagement scripts, BRD) with consistent quality
 - **Reduce Follow-Up Delays**: Support faster decision-making and follow-up actions with less human intervention
 - **Increase customer satisfaction**: provide Context-Aware, Personalized Engagement
-- **Allow TCB staff to focus on high-value activities** (e.g., customer engagement) by reducing Repetitive Manual Tasks
+- **Allow staff to focus on high-value activities** (e.g., customer engagement) by reducing Repetitive Manual Tasks
 
 **Support to build AI Agents with rapid prototyping, built-in security, and scalability**
 
 - Offer flexible and standardized security controls, ensuring security and compliance.
-- Agentic AI/AI Agents adoption can also enable TCB to establish itself as a market leader and drive market dominance with better reputation and competitiveness.
+- Agentic AI/AI Agents adoption can also enable the bank to establish itself as a market leader and drive market dominance with better reputation and competitiveness.
 
 ---
 
@@ -151,16 +151,16 @@ Agentic AI/AI Agents, a rapidly emerging trend in 2025, transforms work by manag
 
 > No Agentic AI capability exists currently.
 
-### 4.2. Targeted Technology Capabilities *(@Tam IT. Nguyen Thi Thanh)*
+### 4.2. Targeted Technology Capabilities
 
 #### 4.2.1. Guiding Principles
 
 - **Principle 01:** AI agents designed to become coworkers in Human-AI Collaboration
-  - Humans play the role of domain experts, providing new thinking and new initiatives. AI Agent handles repetitive tasks according to standards. *(Ref: CIO speech, IT Townhall 19/7/2025)*
-- **Principle 02:** Designing with security in mind from the start, focus on safety to build trust and credibility *(Ref: Directions from CIO)*
+  - Humans play the role of domain experts, providing new thinking and new initiatives. AI Agent handles repetitive tasks according to standards. 
+- **Principle 02:** Designing with security in mind from the start, focus on safety to build trust and credibility 
   - Built-in controls and monitoring help mitigate risk and preserve operational stability, ensuring systems operate reliably and securely under all conditions.
   - Reinforced by ethics and responsible AI, where transparency, fairness, and accountability are foundational.
-- **Principle 03:** Extendable *(Ref: CIO speech, IT Townhall 19/7/2025)*
+- **Principle 03:** Extendable 
   - The system must be extendable since we are in the exploration phase and currently evaluating multiple use cases for the potential application of Agentic AI.
 - **Principle 04:** Interoperability
   - Allowing seamless Agent-to-Agent inter-communication and integration with other tools, platforms, and environments
@@ -170,17 +170,17 @@ Agentic AI/AI Agents, a rapidly emerging trend in 2025, transforms work by manag
 
 #### 4.2.2. Targeted Technology Capabilities
 
-In the TCB's bankwide architecture, Agentic AI Platform is positioned as a capability in the **System of Innovation Layer**. It is a global revolution in which Agentic AI helps to change the way we work. Agentic AI can manage and execute end-to-end processes with less human intervention, evolving from tools (which are focusing on narrow, predefined tasks) to team members and marking a new era in enterprise productivity, efficiency, and growth. It can enable agile, experimental applications like personalized customer engagement and automation for internal operations. Agentic AI Platform can be integrated into Interaction Layer, Systems of Differentiation, System of Record, Data & Analytics to get input and deliver outputs.
+In the enterprise-wide architecture, Agentic AI Platform is positioned as a capability in the **System of Innovation Layer**. It is a global revolution in which Agentic AI helps to change the way we work. Agentic AI can manage and execute end-to-end processes with less human intervention, evolving from tools (which are focusing on narrow, predefined tasks) to team members and marking a new era in enterprise productivity, efficiency, and growth. It can enable agile, experimental applications like personalized customer engagement and automation for internal operations. Agentic AI Platform can be integrated into Interaction Layer, Systems of Differentiation, System of Record, Data & Analytics to get input and deliver outputs.
 
 | Layer | Targeted Capabilities |
 | --- | --- |
-| **Input Layer** | • Multiple data sources feed into the system.<br>&nbsp;&nbsp;◦ Multiple data sources can be ingested into Data lake zones for Agentic AI system, which is a hyperscale data engine providing all of the data and metadata Agentic AI system needs. These Data lake zones enable Agentic AI to access and interpret enterprise knowledge from every relevant source—including files, emails, images, audio, videos, websites, service tickets, Customer 360....<br>&nbsp;&nbsp;◦ In addition, AI agents can get input data from TCB's enterprise applications (e.g., CRM, ERP) (using MCP)<br>• AI agents can receive requirements/triggers, inputs, goals and feedback from users' prompt (on Agent Builder and UI for end-users) |
+| **Input Layer** | • Multiple data sources feed into the system.<br>&nbsp;&nbsp;◦ Multiple data sources can be ingested into Data lake zones for Agentic AI system, which is a hyperscale data engine providing all of the data and metadata Agentic AI system needs. These Data lake zones enable Agentic AI to access and interpret enterprise knowledge from every relevant source—including files, emails, images, audio, videos, websites, service tickets, Customer 360....<br>&nbsp;&nbsp;◦ In addition, AI agents can get input data from enterprise applications (e.g., CRM, ERP) (using MCP)<br>• AI agents can receive requirements/triggers, inputs, goals and feedback from users' prompt (on Agent Builder and UI for end-users) |
 | **Agent Orchestration Layer** | An "orchestrator" agent can break down the larger request/problem into smaller pieces to be tackled using agents, significantly reducing the cost and time needed to arrive at an outcome. By employing reasoning models, they can break down the goals into specific actions or steps and prioritize them. |
 | **AI Agent Layer** | • Support popular AI Agent Patterns *(Refer to Appendix for descriptions)*. Highlighted patterns:<br>&nbsp;&nbsp;◦ **RAG-Based Agent:** For task execution, AI agents may access internal data and enterprise tools systems (such as knowledge bases and enterprise systems, external tools (such as web search, third-party databases)<br>&nbsp;&nbsp;◦ **Coordinating Agent:** AI agent interact with other AI agents, or request clarification from users<br>&nbsp;&nbsp;◦ **Human-in-the-Loop Collaboration:** Although AI agents could be set up to operate autonomously, they still function within the scope of execution. Critical situations will require human oversight or decision-making<br>&nbsp;&nbsp;◦ **Planning Agent:** The above iterations can be repeated in different combinations and until the stated goals have been achieved.<br>&nbsp;&nbsp;◦ **Context-Aware Agent:** The agent utilizes its memory to maintain context<br>&nbsp;&nbsp;◦ **Self-Learning and Adaptive Agents:** Learn from previous iterations or past experiences, and improve its performance over time. |
 | **Data Storage / Retrieval Layer** | • **Diverse Data Repositories (Unified storage):** It unifies structured and unstructured data, providing Agentic AI with a trusted, contextual understanding.<br>• To mitigate LLM hallucinations: leverage external knowledge sources like vector databases and knowledge graphs, integrated via RAG for factual accuracy.<br>&nbsp;&nbsp;◦ **Vector stores:** A vector database indexes embeddings for fast retrieval of relevant knowledge, enabling agents to access contextually accurate data.<br>&nbsp;&nbsp;◦ **Knowledge graphs:** map complex relationships between entities, concepts, and events. This interconnected structure enhances reasoning and supports deeper insights across domains. |
 | **Output Layer** | The following combination ensures that outputs are not only relevant and actionable but also contribute to the agent's ongoing learning and system-wide intelligence:<br>• Delivering custom output formats tailored to specific user needs or systems.<br>• Beyond presentation, agents actively perform knowledge updates, refining their internal models based on new information and interactions.<br>• Additionally, they generate enriched data, enhancing raw inputs with context, insight, or structure. |
 | **Service Layer** | Together, the following capabilities enable a highly responsive, scalable, and intelligent service layer that supports diverse operational demands.<br>• With **multi-channel delivery systems**, AI agents can seamlessly operate across platforms i.e. chat, enterprise applications, ensuring consistent and contextual user engagement.<br>• **Provide recommendations:** Agents deliver meaningful recommendations without manual intervention. Complementing this is the use of adaptive response mechanisms, which tailor outputs and interactions based on user's inputs, user's behavior, and environmental changes. |
-| **Foundation Layer** | • **Security Control** to enforce ethical, operational, and safety standards: Data Protection, Data Poisoning Prevention, Data Loss Prevention, Model Guardrails, Prompt template/validation, Logging and audit, Executing constraints, Authentication and access control<br>• **Workflow and Agent Builder:** No-Code/Low-Code Agent Builder with model selections (Access to both TCB's self-build models and 3rd party models)<br>• **Standardized Interaction protocol:** Agent-to-Agent protocols (i.e. A2A) help collaboration between agents, while Agent to services protocol (.i.e. Model Context Protocol – MCP aids in accessing external tools) |
+| **Foundation Layer** | • **Security Control** to enforce ethical, operational, and safety standards: Data Protection, Data Poisoning Prevention, Data Loss Prevention, Model Guardrails, Prompt template/validation, Logging and audit, Executing constraints, Authentication and access control<br>• **Workflow and Agent Builder:** No-Code/Low-Code Agent Builder with model selections (Access to both self-built models and 3rd party models)<br>• **Standardized Interaction protocol:** Agent-to-Agent protocols (i.e. A2A) help collaboration between agents, while Agent to services protocol (.i.e. Model Context Protocol – MCP aids in accessing external tools) |
 
 #### 4.2.3. To-be Maturity level of Autonomy in AI Agents
 
@@ -192,9 +192,9 @@ In the TCB's bankwide architecture, Agentic AI Platform is positioned as a capab
 - Principle 01 — AI agents designed to become coworkers in Human-AI Collaboration
 - Businesses need confidence in AI systems before granting them higher level of autonomy. To build trust, we should start with low level of autonomy (Level 1-2), where AI provides recommendations (and provides value) with predefined workflows, but humans make all final decisions.
 
-### 4.3. IT Architecture Components *(@Hai IT. Nguyen Ngoc)*
+### 4.3. IT Architecture Components
 
-### 4.4. Solution options analysis *(@Hai IT. Nguyen Ngoc)*
+### 4.4. Solution options analysis
 
 **Overview:** The Agentic AI Framework high-level comparisons:
 
@@ -210,11 +210,11 @@ From the assessment above, we've short-listed 1 option:
 
 - **Build:** LangChain, LangGraph, LangFlow & LangFuse
 
-> Refer to *4.3. Agentforce vs LangChain comparison* for detailed comparison in context of TS-CX10 project of LangChain and AgentForce
+> Refer to *4.3. Agentforce vs LangChain comparison* for detailed comparison between LangChain and AgentForce
 >
 > **Recommendation:** Build the Agentic AI Framework (using LangChain, LangGraph, LangFlow & LangFuse) to ensure full customization for banking-specific requirements (e.g., compliance, personalized workflows). Agentforce is viable for faster Time to market but may require significant customization or incur higher costs.
 
-### 4.5. Tech Stack and License *(@Hai IT. Nguyen Ngoc)*
+### 4.5. Tech Stack and License
 
 | No. | Product name | Brief description | Paid/Free | License |
 | --- | --- | --- | --- | --- |
@@ -224,11 +224,11 @@ From the assessment above, we've short-listed 1 option:
 | **8** | **LangFlow** | Langflow provides developers with both a visual authoring experience and built-in API and MCP servers that turn every workflow into a tool that can be integrated into applications built on any framework or stack. Langflow supports all major LLMs, vector databases and a growing library of AI tools.<br>• Visual builder interface<br>• Source code access lets you customize any component using Python.<br>• Interactive playground to immediately test and refine your flows with step-by-step control.<br>• Multi-agent orchestration with conversation management and retrieval.<br>• Deploy as an API or export as JSON for Python apps.<br>• Deploy as an MCP server and turn your flows into tools for MCP clients.<br>• Observability with LangSmith, LangFuse and other integrations.<br>• Enterprise-ready security and scalability. | Free | MIT |
 | **9** | **RAG Knowledge Base** | Project will provide available integration to the following knowledge base RAG depending on individual use cases asssessment:<br>• AWS Bedrock Knowledge Base on Open Search<br>• AWS Bedrock Knowledge Base on S3 Vector (new)<br>• Mongo DB Vector DB | Available for enterprise and community edition | AWS Bedrock (existing enterprise license)<br>Mongo DB Community SSPL License (available for enterprise internal use)<br>https://www.mongodb.com/legal/licensing/server-side-public-license |
 
-### 4.6. Target Architecture *(@Hai IT. Nguyen Ngoc)*
+### 4.6. Target Architecture
 
-> Reference Deployment View **DAB1 - Agentic AI Platform Foundation #2.2. Deployment View**
+> Reference Deployment View **the Detailed Design Document, Deployment View section**
 
-### 4.7. Security Considerations *(@Phuc IT. Le Thanh)*
+### 4.7. Security Considerations
 
 #### 4.7.1 Data and AI Security
 
@@ -255,7 +255,7 @@ Response to User
 **Security at each checkpoint:**
 
 - **At the endpoint and Network level (McAfee/Trellix)**
-  - Use Trellix on workstations to block users from sending sensitive information outside of TCB
+  - Use Trellix on workstations to block users from sending sensitive information outside of the bank
   - Protects against data loss from:
     - Clipboard software
     - Cloud applications
@@ -278,7 +278,7 @@ Response to User
     - Contextual grounding check
     - Prompt validation
   - Block or masking all prompt, file contain sensitive data
-  - Detail feature assessment: *Kiểm thử chức năng - Amazon Bedrock Guardrail, ApplyGuardrailAPI and Trellix DLP.xlsx*
+  - Detail feature assessment: *internal Guardrail / DLP test report*
 
 - **User portal**
   - Authentication and grant access for only authorized user
@@ -294,30 +294,30 @@ Response to User
 
 #### 4.7.2. System security
 
-- The system is deployed in the TCB Landing zone and complies with TCB's security standards.
+- The system is deployed in the corporate landing zone and complies with the bank's security standards.
 - Centrally authenticate users with Azure AD using SSO and authorize using IAM SailPoint.
-- For Knowledge Base (KB), build an authorization matrix based on functional roles in TCB for data that needs restricted access. For example, EA cannot access ITS's KB and vice versa.
+- For Knowledge Base (KB), build an authorization matrix based on functional roles in the bank for data that needs restricted access. For example, EA cannot access ITS's KB and vice versa.
 - Authentication for communication between service to service
 - Separate IAM Role for each LLM model used on AWS Bedrock.
-- The system only allows access within TCB's internal network.
+- The system only allows access within the internal network.
 - Require encryption of all data in transit and data at rest.
 - Logging and monitoring user action, LLM models processing file.
 - Deploy AWS Bedrock on EC2 vs Serverless/Managed Service
 
 #### 4.7.2. Compliance
 
-Compliance with TCB security and Data privacy.
+Compliance with corporate security and data privacy.
 
-| Aspect | Deploy LLM on Amazon EC2 (in TCB Landing Zone) | Deploying LLM with Amazon Bedrock (Serverless/Managed Service) |
+| Aspect | Deploy LLM on Amazon EC2 (in the corporate landing zone) | Deploying LLM with Amazon Bedrock (Serverless/Managed Service) |
 | --- | --- | --- |
-| **Control & Customization** | • **Highest control:** Full control over the operating system, libraries, and deployment environment.<br>• **High customization:** Can install security controls according to TCB standards | • **Limited control:** AWS manages the infrastructure. You only interact via APIs.<br>• **Limited customization:** Depends on models and configurations provided by Bedrock. |
-| **Data Privacy** | • **Highest priority on privacy:** Data is processed within TCB's Landing Zone environment, minimizing the risk of data leaving control.<br>• **High control:** TCB can apply customized security, encryption, and access control policies at the network and system level according to TCB standards | • **High level of privacy:** Bedrock guarantees that your data will not be used to train the underlying models. Data is encrypted in transit and at rest.<br>• **Still via public APIs, though:** Despite AWS PrivateLink, data still travels through AWS services, which can be a concern for extremely sensitive data. *Refer:* https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html |
+| **Control & Customization** | • **Highest control:** Full control over the operating system, libraries, and deployment environment.<br>• **High customization:** Can install security controls according to corporate standards | • **Limited control:** AWS manages the infrastructure. You only interact via APIs.<br>• **Limited customization:** Depends on models and configurations provided by Bedrock. |
+| **Data Privacy** | • **Highest priority on privacy:** Data is processed within the corporate landing zone environment, minimizing the risk of data leaving control.<br>• **High control:** the bank can apply customized security, encryption, and access control policies at the network and system level according to corporate standards | • **High level of privacy:** Bedrock guarantees that your data will not be used to train the underlying models. Data is encrypted in transit and at rest.<br>• **Still via public APIs, though:** Despite AWS PrivateLink, data still travels through AWS services, which can be a concern for extremely sensitive data. *Refer:* https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html |
 | **Cost** | Fixed or hourly cost: Pay for EC2 instances that run continuously, even when there are no requests. | Pay as you go (tokens/requests): Pay only for what you use. |
-| **Management & Operations** | Comprehensive Management: TCB is responsible for operating systems, patching, maintenance, monitoring, and security. | Minimal management: AWS is responsible for infrastructure, patching, and maintenance. |
+| **Management & Operations** | Comprehensive Management: the bank is responsible for operating systems, patching, maintenance, monitoring, and security. | Minimal management: AWS is responsible for infrastructure, patching, and maintenance. |
 | **Implementation time** | Longer: Requires EC2 environment setup, configuration, and optimization. | Faster: Simply integrate via API. Can start using immediately. |
 
 > **Propose for endorsement:**
-> - Using Amazon BedRock Serverless endpoint for available models (already in use in AE+ Chatbot and several internal use cases)
+> - Using Amazon BedRock Serverless endpoint for available models (already in use in an existing internal chatbot and several internal use cases)
 > - Using Amazon BedRock Marketplace deployment to Sage Maker EC2 for non-available models, which fulfill required niche.
 
 ---
@@ -328,10 +328,10 @@ Compliance with TCB security and Data privacy.
 
 **Overview:**
 
-- **Use Case 1: CX10 - Automate Post-Call Workflows**
+- **Use Case 1: Automate Post-Call Workflows**
   - Automate repetitive post-call tasks (e.g., CRM updates, follow-up scheduling) to allow RMs to focus on client relationships.
   - Automate action item identification and scheduling for faster client engagement.
-- **Use Case 2: CX10 - Customer 360 Assistant**
+- **Use Case 2: Customer 360 Assistant**
   - Automate consolidate all 360 customer information
   - Provide sentiment analysis, insights, lead recommendation, personalized engagement scripts and product positioning.
 - **Use Case 3: BA GenAI Assistant**
@@ -345,12 +345,12 @@ Compliance with TCB security and Data privacy.
 - **Limited Adaptability:** Rule-based systems cannot adjust workflows dynamically, leading to missed opportunities in customer engagement and sales.
 - **Lack of personalization:** Lack of real-time, context-aware responses results in generic engagement, lowering conversion rates and satisfaction.
 - The need to have **specialized tools to handle NPL and unstructured data** (e.g., call transcripts, customer sentiment).
-- The need to use **TCB's Data and Insights** as an input for next steps in the workflow: Traditional systems need predefined, rule-based integrations, delaying insights
+- The need to use **internal Data and Insights** as an input for next steps in the workflow: Traditional systems need predefined, rule-based integrations, delaying insights
 - **High Development cost:** Frequent updates to rules and integrations are needed to accommodate new use cases, increasing costs and complexity
 
-#### Use Case 1: CX10 - Automate Post-Call Workflows
+#### Use Case 1: Automate Post-Call Workflows
 
-By integrating Agentic AI Platform into banking operations, TCB aims to improve and boost the customer journey and elevate sales capabilities through hyper-personalized engagement, streamlined onboarding, and intelligent automation.
+By integrating Agentic AI Platform into banking operations, the bank aims to improve and boost the customer journey and elevate sales capabilities through hyper-personalized engagement, streamlined onboarding, and intelligent automation.
 
 | No. | Category of Business Pain Points or Needs | Business Pain Point | Functional Requirement |
 | --- | --- | --- | --- |
@@ -366,7 +366,7 @@ By integrating Agentic AI Platform into banking operations, TCB aims to improve 
 - **Reduce Follow-Up Delays:** Automate action item identification and scheduling for faster client engagement.
 - **Increase customer satisfaction:** Concise and real time customized & personalized recommendations
 
-#### Use Case 2: CX10 - Customer 360 Assistant
+#### Use Case 2: Customer 360 Assistant
 
 > Full use case: Use case 2 - Customer 360 Assistant
 
@@ -375,9 +375,9 @@ In the following table, we only list down Functional Requirements which have pot
 | No. | Category of Business Pain Points or Needs | Business Pain Point | Functional Requirement |
 | --- | --- | --- | --- |
 | 1 | The need to have specialized tools to handle unstructured data | Manual processing of unstructured documents is slow and error-prone. | Extract data from unstructured documents. |
-| 2 | The need to use TCB's Data and Insights as an input for next steps in the workflow | Siloed data delays insights from transactional, behavioral, and demographic sources. Traditional systems need predefined, rule-based integrations, delaying insights | Provide insights from transactional, behavioral, and demographic sources. |
+| 2 | The need to use internal Data and Insights as an input for next steps in the workflow | Siloed data delays insights from transactional, behavioral, and demographic sources. Traditional systems need predefined, rule-based integrations, delaying insights | Provide insights from transactional, behavioral, and demographic sources. |
 | 3 | | | Perform sentiment analysis |
-| 4 | Inefficient Human Dependency, reducing productivity and scalability | • Manual adjusting based on context.<br>• Manual lead identification misses opportunities. | • Context-dependent process: able to adjust workflows dynamically (define leads when needed)<br>• Automated and accurate lead recommendation based on "4Đ" criteria (đúng nhu cầu, đúng thời điểm, đúng đối tượng, đảm bảo tài chính) |
+| 4 | Inefficient Human Dependency, reducing productivity and scalability | • Manual adjusting based on context.<br>• Manual lead identification misses opportunities. | • Context-dependent process: able to adjust workflows dynamically (define leads when needed)<br>• Automated and accurate lead recommendation based on need-fit criteria (right needs, right timing, right audience, financial readiness) |
 | 5 | | • Manual adjusting based on context.<br>• Manual updates to the CRM compromise data quality + reduce productivity | • Context-dependent process: able to adjust workflows dynamically (when and what to create/update in CRM)<br>• Offer a user interface with a "Create Lead" button. |
 | 6 | Lack of personalization | • Generic engagement scripts reduce conversion rates. | Provide personalized recommendation for engagement scripts and product positioning (need-based selling). |
 
@@ -402,16 +402,16 @@ AI agents revolutionize the role of business analysts/product owners by automati
 
 #### Non-Functional Requirement 1: Secured LLM model exploration and integration
 
-Using model hosted inside TCB Landing Zone, and third party model endpoints *(Which is scope of Project IT-B59)*.
+Using model hosted inside the corporate landing zone, and third party model endpoints *(Which is scope of the AI Gateway project)*.
 
-TCB has multiple AI/Agentic AI POC/ Internal tools for selected use-cases, but not able to scale-up due to the lack of comprehensive solution with foundational components (including Security control).
+the bank has multiple AI/Agentic AI POC/ Internal tools for selected use-cases, but not able to scale-up due to the lack of comprehensive solution with foundational components (including Security control).
 
 **Current limitations:**
 
 - Limited support for selected use cases.
-- Lack of full control over inputs/outputs from TCB.
+- Lack of full control over inputs/outputs from the bank.
 
-Although TCB is awared of the importance and opportunities to adopt AI/Agentic AI, the lack of foundational components (i.e. Data Protection, Data Poisoning Prevention, Data Loss Prevention, Model Guardrails, prompt validation, prompt logging and audit) becomes road-blockers, requiring TCB act decisively to mitigate them.
+Although the bank is awared of the importance and opportunities to adopt AI/Agentic AI, the lack of foundational components (i.e. Data Protection, Data Poisoning Prevention, Data Loss Prevention, Model Guardrails, prompt validation, prompt logging and audit) becomes road-blockers, requiring the bank to act decisively to mitigate them.
 
 | No. | Targeted Capability | Non-Functional Requirement |
 | --- | --- | --- |
@@ -419,13 +419,13 @@ Although TCB is awared of the importance and opportunities to adopt AI/Agentic A
 | 2 | **AI Guardrails:** Predefined rules and filters to protect LLM applications from data leakage, algorithmic bias, hallucinations, and malicious inputs. These ensure safe and responsible deployment. This includes PII masking, granular access controls, real-time monitoring. | Configure and deploy AI GuardRails solution to perform content filter, PII masking/filtering, preventing banned topics, context assessment and truth grounding of various models and use cases. |
 | 3 | **Prompt Auditing, Logging, and Monitoring:** Comprehensive tracking and analysis of all prompts and responses to ensure compliance, detect anomalies, and provide an auditable trail of AI interactions. | Flexible UI and LLM gateway to provide an comprehensive and unified Human Interface, System Interface to integrate with different AI model endpoints |
 | 4 | **Rapidly build and deploy agents**, reducing time-to-market and technical barriers. | No-Code/Low-Code Agent Builder |
-| 5 | **Model selections** (Access to both TCB's self-build models and 3rd party models) | |
+| 5 | **Model selections** (Access to both self-built models and 3rd party models) | |
 
 #### Non-Functional Requirement 2: Number of users and transactions
 
-**Use Case 1: CX10 - Automate Post-Call Workflows and Use Case 2: CX10 - Customer 360 Assistant**
+**Use Case 1: Automate Post-Call Workflows and Use Case 2: Customer 360 Assistant**
 
-The users of this use case include PRMs across the bank. The following data is provided by the business team (Workstream 1) of the CX10 project:
+The users of this use case include PRMs across the bank. The following data is provided by the business team (Workstream 1):
 
 - The number of users is **800**. The business team expects that the number of users will not grow over the years
 - The number of concurrent users (peak time) is **800**
@@ -462,7 +462,7 @@ The party providing the business requirements is COC, ROC, CBT, RBT.... The user
 - **Context-Aware Agent:** Agents dynamically adjust their behavior and decision-making based on the context in which they operate.
 - **Self-Learning and Adaptive Agents:** Agents adapt through continuous learning from interactions and feedback: adapt to user interactions over time, learning from feedback and adjusting responses to better align with user preferences and evolving needs.
 - **Human-in-the-Loop Collaboration:** Agents operate semi-autonomously with human oversight. *Example:* Sales assisted tools that provide recommendations but allow RM to make final decisions.
-- **RAG-Based Agent:** This pattern involves the use of Retrieval Augmented Generation (RAG), where AI agents utilize knowledge sources (TCB systems or external data sources i.e. web browsing) dynamically to enhance their decision-making and response.
+- **RAG-Based Agent:** This pattern involves the use of Retrieval Augmented Generation (RAG), where AI agents utilize knowledge sources (corporate systems or external data sources i.e. web browsing) dynamically to enhance their decision-making and response.
 
 **Sources:**
 
@@ -475,11 +475,11 @@ The party providing the business requirements is COC, ROC, CBT, RBT.... The user
 
 **Use Case 1: Automate Post-Call Workflows**
 
-> *Notes: The detailed design (including Agent-Orchestration, Agent-Service, Agent-Agent, Orchestration-UI interactions) will be finalized in DAB1.*
+> *Notes: The detailed design (including Agent-Orchestration, Agent-Service, Agent-Agent, Orchestration-UI interactions) will be finalized in the Detailed Design Document.*
 
 ### 5.5. Example of data flow in Agentic AI
 
-> *Notes: The detailed design will be finalized in DAB1.*
+> *Notes: The detailed design will be finalized in the Detailed Design Document.*
 
 ### 5.6. Agentforce vs LangChain comparison
 

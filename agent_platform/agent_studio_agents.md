@@ -1,10 +1,10 @@
-# List agent Tài
+# List of agents
 
-> Tài super agent
+> Hub super agent
 
 ## Table of Contents
 
-- [Agent: TÀI (Super Agent)](#agent-tài-super-agent)
+- [Agent: Hub (Super Agent)](#agent-tài-super-agent)
 - [Translator Agent: The Translator](#translator-agent-the-translator)
 - [Summarizer Agent: The Summarizer](#summarizer-agent-the-summarizer)
 - [Powerpointer: The Powerpoint-er](#powerpointer-the-powerpoint-er)
@@ -16,18 +16,18 @@
 
 ---
 
-## Agent: TÀI (Super Agent)
+## Agent: Hub (Super Agent)
 
 ### Agent Overview
 
 | Field | Value |
 | --- | --- |
-| **Name** | TÀI |
-| **ID** | `tai` |
-| **Databricks App** | `agent-tai` |
+| **Name** | Hub |
+| **ID** | `hub` |
+| **Databricks App** | `agent-hub` |
 | **Primary Responsibility** | Unified AI assistant — orchestrates all specialist agents via LangGraph ReAct tool calling |
 | **Business Purpose** | Single chat interface where users can accomplish any task without knowing which agent to use |
-| **When Invoked** | User sends a message in TÀI Chat (hub frontend component) |
+| **When Invoked** | User sends a message in Hub Chat (hub frontend component) |
 
 ### Input & Output
 
@@ -53,14 +53,14 @@
 
 #### User Flow
 
-1. User switches to "TÀI" tab in the hub (or accesses TÀI Chat directly)
+1. User switches to "Hub" tab in the hub (or accesses Hub Chat directly)
 2. User types a message (e.g., "Translate my report to English")
-3. **If file needed:** TÀI responds "I need you to upload a file" → file upload UI appears → user uploads file → TÀI resumes automatically
-4. **If no file needed** (e.g., "Create a presentation about AI"): TÀI directly calls the appropriate agent tool
-5. **Tool execution:** TÀI calls specialist agent API (e.g., Translator, PPTX-er) behind the scenes
-6. **Result:** TÀI presents the result with UI actions (download button, brainstorm canvas, etc.)
-7. User can continue the conversation — TÀI remembers context and can chain multiple tools
-8. **Example multi-step:** "Translate this file" → uploads → "Now summarize it" → TÀI calls Summarizer with the same file
+3. **If file needed:** Hub responds "I need you to upload a file" → file upload UI appears → user uploads file → Hub resumes automatically
+4. **If no file needed** (e.g., "Create a presentation about AI"): Hub directly calls the appropriate agent tool
+5. **Tool execution:** Hub calls specialist agent API (e.g., Translator, PPTX-er) behind the scenes
+6. **Result:** Hub presents the result with UI actions (download button, brainstorm canvas, etc.)
+7. User can continue the conversation — Hub remembers context and can chain multiple tools
+8. **Example multi-step:** "Translate this file" → uploads → "Now summarize it" → Hub calls Summarizer with the same file
 
 #### LangGraph ReAct Graph
 
@@ -87,13 +87,13 @@ load_preferences → agent ⇄ tools → update_preferences → END
 1. Agent calls `request_file_upload` tool
 2. Tool calls `interrupt()` — pauses the graph
 3. Frontend detects `status: "interrupted"` → shows file upload UI
-4. User uploads file → frontend calls `POST /api/tai/resume` with `volume_path`
+4. User uploads file → frontend calls `POST /api/hub/resume` with `volume_path`
 5. Graph resumes with the `volume_path` as the tool result
 6. Agent continues with the file path (e.g., calls `translate_document`)
 
 #### Download Proxy
 
-TÀI provides `GET /api/download/{agent}/{file_id}` to proxy file downloads from agent apps using SP auth (browsers don't have SP tokens).
+Hub provides `GET /api/download/{agent}/{file_id}` to proxy file downloads from agent apps using SP auth (browsers don't have SP tokens).
 
 ### 4. Internal APIs / Functions
 
@@ -131,7 +131,7 @@ TÀI provides `GET /api/download/{agent}/{file_id}` to proxy file downloads from
 ### Known Limitations
 
 - No tools for Canvas Designer or Resume Evaluator (newly added agents)
-- Higher latency due to multi-hop: TÀI → Agent API → LLM
+- Higher latency due to multi-hop: Hub → Agent API → LLM
 - No streaming — entire response returned at once
 - Session state grows unbounded (mitigated by message compaction)
 
@@ -149,7 +149,7 @@ TÀI provides `GET /api/download/{agent}/{file_id}` to proxy file downloads from
 
 | Type | Details |
 | --- | --- |
-| **Logs** | `tai` and `tai.tools` loggers |
+| **Logs** | `hub` and `hub.tools` loggers |
 | **Traces** | MLflow autolog (experiment: 1811265038828691) |
 
 ---
@@ -165,7 +165,7 @@ TÀI provides `GET /api/download/{agent}/{file_id}` to proxy file downloads from
 | **Databricks App** | `agent-the-translator` |
 | **Primary Responsibility** | Translate documents between languages while preserving original formatting |
 | **Business Purpose** | Enable employees to translate financial reports, presentations, and documents without losing layout |
-| **When Invoked** | User uploads a file and selects target language; or TÀI calls `translate_document` tool |
+| **When Invoked** | User uploads a file and selects target language; or Hub calls `translate_document` tool |
 
 ### Input & Output
 
@@ -308,7 +308,7 @@ TÀI provides `GET /api/download/{agent}/{file_id}` to proxy file downloads from
 
 | Type | Details |
 | --- | --- |
-| **Logs** | `tai_studio.translate` logger — logs file size, segment counts, parse results |
+| **Logs** | `agent_studio.translate` logger — logs file size, segment counts, parse results |
 | **Metrics** | None |
 | **Traces** | MLflow autolog via `mlflow.langchain.autolog()` (experiment ID: 1811265038828270) |
 
@@ -325,7 +325,7 @@ TÀI provides `GET /api/download/{agent}/{file_id}` to proxy file downloads from
 | **Databricks App** | `agent-the-summarizer` |
 | **Primary Responsibility** | Summarize uploaded documents into executive summaries with key insights |
 | **Business Purpose** | Help employees quickly digest long reports, meeting transcripts, and documents |
-| **When Invoked** | User uploads one or more files; or TÀI calls `summarize_documents` tool |
+| **When Invoked** | User uploads one or more files; or Hub calls `summarize_documents` tool |
 
 ### Input & Output
 
@@ -418,7 +418,7 @@ TÀI provides `GET /api/download/{agent}/{file_id}` to proxy file downloads from
 
 | Type | Details |
 | --- | --- |
-| **Logs** | `tai_studio.summarize` — logs file count, parse sizes, total chars |
+| **Logs** | `agent_studio.summarize` — logs file count, parse sizes, total chars |
 | **Traces** | MLflow autolog (experiment: 1811265038828695) |
 
 ---
@@ -434,7 +434,7 @@ TÀI provides `GET /api/download/{agent}/{file_id}` to proxy file downloads from
 | **Name** | The Powerpoint-er |
 | **ID** | `the-powerpoint-er` |
 | **Databricks App** | `agent-the-powerpoint-er` |
-| **Primary Responsibility** | Generate branded Techcombank PPTX presentations from text descriptions |
+| **Primary Responsibility** | Generate branded PPTX presentations from text descriptions |
 | **Business Purpose** | Enable employees to create professional slide decks instantly without design skills |
 | **When Invoked** | User provides topic / audience / slide count via web UI |
 
@@ -485,7 +485,7 @@ BRIEF → OUTLINE → PREVIEW
 **Step 1 — Brief:**
 
 - User enters topic, audience, optional context, number of slides (5–15)
-- Toggle `use_template` (TCB branded frame vs. free-form HTML)
+- Toggle `use_template` (corporate-branded frame vs. free-form HTML)
 
 **Step 2 — Outline:**
 
@@ -529,7 +529,7 @@ All routes: `POST`, prefix `/api/v1/`.
    ├─ type == section  → section_html()  [Python, no LLM]
    ├─ type == summary  → summary_html()  [Python, no LLM]
    └─ type == content
-        ├─ use_template=True  → LLM(SYSTEM_HTML_TCB_FRAGMENT_{VARIANT})
+        ├─ use_template=True  → LLM(SYSTEM_HTML_BRAND_FRAGMENT_{VARIANT})
         │                       → inner HTML fragment (1213×580 px)
         │                       → content_frame() wraps with title/logo/footer
         └─ use_template=False → LLM(SYSTEM_HTML_FREE) → full self-contained HTML (1333×750 px)
@@ -585,9 +585,9 @@ Every `/outline` and `/generate` call runs:
 
 | Variant | Purpose | LLM Prompt |
 | --- | --- | --- |
-| `data` | KPIs, metrics, charts, comparisons | `SYSTEM_HTML_TCB_FRAGMENT_DATA` |
-| `concept` | Principles, frameworks, prose-forward | `SYSTEM_HTML_TCB_FRAGMENT_CONCEPT` |
-| `process` | Timelines, workflows, step sequences | `SYSTEM_HTML_TCB_FRAGMENT_PROCESS` |
+| `data` | KPIs, metrics, charts, comparisons | `SYSTEM_HTML_BRAND_FRAGMENT_DATA` |
+| `concept` | Principles, frameworks, prose-forward | `SYSTEM_HTML_BRAND_FRAGMENT_CONCEPT` |
+| `process` | Timelines, workflows, step sequences | `SYSTEM_HTML_BRAND_FRAGMENT_PROCESS` |
 
 > Default variant is `data` for backward compatibility.
 
@@ -599,7 +599,7 @@ When rendering a content slide with `use_template=True`, the LLM produces an inn
 | --- | --- | --- |
 | Diamond background | Full slide | `bg_content.png` |
 | Title | Top-left | Red (#ED1B24), bold |
-| TCB Logo | Top-right | Fixed asset |
+| Corporate Logo | Top-right | Fixed asset |
 | Citation footer | Bottom-left | Source links from `slide.sources` |
 | Page number | Bottom-right | Slide index |
 
@@ -609,7 +609,7 @@ When rendering a content slide with `use_template=True`, the LLM produces an inn
 
 - Inline contenteditable on leaf text nodes only
 - Formatting toolbar: Bold / Italic / Underline / Strikethrough
-- Font size picker, color palette (10 TCB brand colors)
+- Font size picker, color palette (10 brand colors)
 - Text alignment, list formatting
 - Undo / Redo
 
@@ -646,7 +646,7 @@ When rendering a content slide with `use_template=True`, the LLM produces an inn
 | `MLFLOW_TRACKING_URI` | `"databricks"` |
 | `APP_ENV` | `"local"` / `"dev"` / `"prod"` — controls TLS and auth mode |
 
-#### Design Tokens (TCB Brand)
+#### Design Tokens (Brand)
 
 | Token | Value | Purpose |
 | --- | --- | --- |
@@ -691,7 +691,7 @@ the-powerpoint-er/
 │   ├── main.py                   FastAPI app, CORS, health endpoint
 │   ├── pptx/
 │   │   ├── pipeline.py           render_slide_html() dispatcher
-│   │   ├── tokens.py             TCB brand colors & canvas constants
+│   │   ├── tokens.py             brand colors & canvas constants
 │   │   ├── utils.py              HTML escaping, base64 data URL helpers
 │   │   ├── prompts/
 │   │   │   ├── outline.py        SYSTEM_OUTLINE prompt
@@ -760,13 +760,8 @@ Exported PPTX is **image-based and not editable after download**: each slide is 
 
 ## Vaulter: The Vaulter
 
-> *Skip to:* Top Bar · Sidebar · Main Content · tài Create · Ask Rovo · Back to top · Jira reports · Shared links · UML Diagrams · khanhpq4 · Rolando
-
-> *Updated Apr 21 — Edit · Share*
 >
 > **Agent: The Vaulter**
-> By Thuc DA. Nguyen Minh · Internal · 2 min · 5
-> Add a reaction
 
 ### Agent: The Vaulter
 
@@ -779,7 +774,7 @@ Exported PPTX is **image-based and not editable after download**: each slide is 
 | **Databricks App** | `agent-the-vaulter` |
 | **Primary Responsibility** | Build a knowledge graph from documents and enable natural-language queries |
 | **Business Purpose** | Create a personal knowledge base from uploaded documents; answer questions using stored knowledge |
-| **When Invoked** | User uploads documents to vault; queries the vault; or TÀI calls `upload_to_vault`/`query_vault` tools |
+| **When Invoked** | User uploads documents to vault; queries the vault; or Hub calls `upload_to_vault`/`query_vault` tools |
 
 ### Input & Output
 
@@ -809,9 +804,9 @@ Exported PPTX is **image-based and not editable after download**: each slide is 
 
 **Side Effects**
 
-- Documents stored in Lakebase `tai_studio.documents` table
-- Graph nodes stored in `tai_studio.nodes` table
-- Graph edges stored in `tai_studio.edges` table
+- Documents stored in Lakebase `agent_studio.documents` table
+- Graph nodes stored in `agent_studio.nodes` table
+- Graph edges stored in `agent_studio.edges` table
 
 ### Core Logic
 
@@ -909,31 +904,17 @@ Exported PPTX is **image-based and not editable after download**: each slide is 
 
 | Type | Details |
 | --- | --- |
-| **Logs** | `tai_studio.vault` — logs upload/query operations |
+| **Logs** | `agent_studio.vault` — logs upload/query operations |
 | **Traces** | MLflow autolog (experiment: 1811265038828696) |
 
 ### Related content
-
-- Agent: The Vaulter — Thuc DA. Nguyen Minh
-- AI Engineering Mentor Profile — Anh DA. Do Tuan
-- \ RAG_agent exercise — Kien DA. Doan Trung
-- CV Review — Phong Bui — Senior Data Engineer — Tan DA. Pham Khac
-- 1.2. Test summary report - update job insight and add job sourcing sharepoint, publishing — Hue IT. Le Thi (Deactivated)
-- SA - Showcase 20260423 — Hai IT. Trieu Nam
-
-*Add a comment · Add labels · Add a reaction*
 
 ---
 
 ## Brainstormer: The Brainstormer
 
-> *Skip to:* Top Bar · Sidebar · Main Content · tài Create · Ask Rovo · Back to top · Jira reports · Shared links · UML Diagrams · khanhpq4 · Rolando
-
-> *Updated Apr 21 — Edit · Share*
 >
 > **Agent: The Brainstormer**
-> By Thuc DA. Nguyen Minh · Internal · 2 min · 3
-> Add a reaction
 
 ### Agent: The Brainstormer
 
@@ -946,7 +927,7 @@ Exported PPTX is **image-based and not editable after download**: each slide is 
 | **Databricks App** | `agent-the-brainstormer` |
 | **Primary Responsibility** | Structured brainstorming with live canvas and cross-session memory |
 | **Business Purpose** | Help employees think through ideas, problems, and decisions with a Socratic AI partner |
-| **When Invoked** | User starts a brainstorming session; or TÀI calls `brainstorm` tool |
+| **When Invoked** | User starts a brainstorming session; or Hub calls `brainstorm` tool |
 
 ### Input & Output
 
@@ -965,8 +946,8 @@ Exported PPTX is **image-based and not editable after download**: each slide is 
 **Side Effects**
 
 - Session state persisted in Lakebase via LangGraph `AsyncCheckpointSaver`
-- Session metadata stored in `tai_studio.brainstorm_index` table
-- User preferences extracted and stored in `tai_studio.user_preferences` table
+- Session metadata stored in `agent_studio.brainstorm_index` table
+- User preferences extracted and stored in `agent_studio.user_preferences` table
 
 ### Core Logic
 
@@ -1057,15 +1038,6 @@ At the 8th user message, a system message is injected: *"You MUST wrap up now. D
 
 ### Related content
 
-- Agent: The Vaulter — Thuc DA. Nguyen Minh
-- AI Engineering Mentor Profile — Anh DA. Do Tuan
-- \ RAG_agent exercise — Kien DA. Doan Trung
-- CV Review — Phong Bui — Senior Data Engineer — Tan DA. Pham Khac
-- 1.2. Test summary report - update job insight and add job sourcing sharepoint, publishing — Hue IT. Le Thi (Deactivated)
-- SA - Showcase 20260423 — Hai IT. Trieu Nam
-
-*Add a comment · Add labels · Add a reaction*
-
 ---
 
 ## Visionary: The AI Visionary
@@ -1081,7 +1053,7 @@ At the 8th user message, a system message is injected: *"You MUST wrap up now. D
 | **Databricks App** | `agent-the-ai-visionary` |
 | **Primary Responsibility** | AI vision Q&A (proxy to Knowledge Agent endpoint) + PPTX report generation |
 | **Business Purpose** | Answer questions about AI strategy/vision using a specialized Knowledge Agent; generate summary decks |
-| **When Invoked** | User asks AI vision questions; requests a report deck; or TÀI calls `ask_visionary` tool |
+| **When Invoked** | User asks AI vision questions; requests a report deck; or Hub calls `ask_visionary` tool |
 
 ### Input & Output
 
@@ -1116,7 +1088,7 @@ At the 8th user message, a system message is injected: *"You MUST wrap up now. D
 5. **Report mode:** User clicks "Generate Report" or asks for a deck
 6. User provides a prompt (e.g., "Create a weekly AI update deck")
 7. **Outline generated:** LLM creates slide structure → user can review/edit
-8. User clicks "Build" → PPTX is generated using Techcombank template
+8. User clicks "Build" → PPTX is generated using template
 9. **Download:** User downloads the branded `.pptx` file
 
 #### Chat Flow (Proxy to Knowledge Agent)
@@ -1132,7 +1104,7 @@ At the 8th user message, a system message is injected: *"You MUST wrap up now. D
 #### Outline + Build Flow
 
 - **Outline:** LLM generates JSON array of slides (title + bullets + notes)
-- **Build:** Renders slides to PPTX using Techcombank template
+- **Build:** Renders slides to PPTX using template
   - Cover slide: title in ALL CAPS
   - Content slides: title + bullet list
   - Simpler rendering than PPTX-er (no visual enrichment)
@@ -1310,7 +1282,7 @@ At the 8th user message, a system message is injected: *"You MUST wrap up now. D
 
 | Type | Details |
 | --- | --- |
-| **Logs** | `tai_studio.canvas` logger |
+| **Logs** | `agent_studio.canvas` logger |
 | **Traces** | MLflow autolog (experiment: 1818065766679570) |
 
 ---
@@ -1474,5 +1446,5 @@ At the 8th user message, a system message is injected: *"You MUST wrap up now. D
 
 | Type | Details |
 | --- | --- |
-| **Logs** | `tai_studio.evaluate` logger — logs parse sizes, evaluation progress |
+| **Logs** | `agent_studio.evaluate` logger — logs parse sizes, evaluation progress |
 | **Traces** | MLflow autolog (experiment: 1818065766679571) |
