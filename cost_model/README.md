@@ -15,6 +15,7 @@
 | Hiểu **cost của 1 invocation** | [`02_cost_formula.md`](02_cost_formula.md) | 6 lớp MECE + công thức multimodal-ready |
 | **Dự báo** spend tháng/quý/năm | [`03_forecasting.md`](03_forecasting.md) | Driver-based + 3 scenarios + sensitivity |
 | **Cảnh báo** budget / anomaly | [`04_monitoring.md`](04_monitoring.md) | 3-tier (pre / real-time / post-spend) + Council |
+| **Forecast per service** (cost per user × service) | [`05_per_service_forecasting.md`](05_per_service_forecasting.md) | BUV chuẩn hoá (doc / 1k chars / slide) + công thức 3 service |
 | Context phụ (market / allocation / tooling / roadmap) | [`_appendix/`](_appendix/) | Reference — không phải đường găng |
 
 ---
@@ -54,6 +55,7 @@ cost_model/
 ├── 02_cost_formula.md          ← taxonomy 6 lớp + công thức tổng
 ├── 03_forecasting.md           ← driver-based + 3 scenarios
 ├── 04_monitoring.md            ← alerts + budget enforcement + Council
+├── 05_per_service_forecasting.md ← BUV per service + cost per user
 └── _appendix/
     ├── market_landscape.md     ← industry benchmark, FinOps Foundation framework
     ├── allocation.md           ← tagging taxonomy, chargeback vs showback, unit econ
@@ -94,4 +96,5 @@ cost_model/
 | `02_cost_formula.md` | ✅ v1 — multimodal-ready | Validate với platform team Phase 1 |
 | `03_forecasting.md` | ✅ v1 — methodology | Calibrate với baseline data Phase 2 |
 | `04_monitoring.md` | ✅ v1 — operating model | Council charter cần executive endorse |
+| `05_per_service_forecasting.md` | ✅ v1 (2026-05-22) — BUV framework | Cần calibrate sub-dim weights với data thật (Phase 4) |
 | `_appendix/*` | ✅ v1 — research baseline | Refresh quarterly |

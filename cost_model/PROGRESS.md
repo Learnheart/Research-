@@ -1,6 +1,6 @@
 # PROGRESS — Cost Model Research
 
-[CẬP NHẬT: 21/05/2026]
+[CẬP NHẬT: 22/05/2026]
 
 > **Mục đích:** Checklist tracking tất cả phase + task của bài nghiên cứu Cost Model cho Agent Platform. Đánh dấu `[ ]` cho task chưa làm, `[x]` cho task hoàn thành. Mỗi task hoàn thành ghi rõ ngày DD/MM/YYYY.
 
@@ -38,6 +38,7 @@
 - [x] Refactor `05_monitoring` → `04_monitoring.md` với modality budget policy — 21/05/2026
 - [x] Move 4 file phụ vào `_appendix/` (market, allocation, tooling, roadmap) — 21/05/2026
 - [x] Xoá 7 folder legacy `01_..._07_` — 21/05/2026
+- [x] Thêm `05_per_service_forecasting.md` — BUV framework + per-user × per-service forecast (3 service: summarizer, translator, powerpointer) — 22/05/2026
 
 ---
 
@@ -56,6 +57,7 @@
 - [ ] Audit `02_cost_formula.md` — citations từng section
 - [ ] Audit `03_forecasting.md` — citations từng section
 - [ ] Audit `04_monitoring.md` — citations từng section
+- [ ] Audit `05_per_service_forecasting.md` — calibrate sub-dim weights với data thật (Phase 4)
 - [ ] Audit `_appendix/market_landscape.md` — compliance toàn bộ
 - [ ] Audit `_appendix/allocation.md` — compliance toàn bộ
 - [ ] Audit `_appendix/tooling.md` — compliance toàn bộ
